@@ -79,7 +79,7 @@ class CustomDataset(Dataset):
         }
 
 class ImageDataset(Dataset):
-    def __init__(self, root_dir, transform=None, crop_size=32, patch_size=16):
+    def __init__(self, root_dir, transform=None, crop_size=32, patch_size=16, selected_classes=None):
         self.root_dir = root_dir
         self.transform = transform
         self.data = []
@@ -89,6 +89,7 @@ class ImageDataset(Dataset):
 
         # 데이터 및 레이블 추출
         labels = []
+        
         for folder in os.listdir(root_dir):
             folder_path = os.path.join(root_dir, folder)
             if os.path.isdir(folder_path):
@@ -99,13 +100,23 @@ class ImageDataset(Dataset):
                     raise ValueError(f"폴더 {folder}에 JPG 파일이 하나가 아닙니다.")
 
                 label_path = os.path.join(folder_path, "label.txt")
-                if os.path.exists(label_path):
-                    with open(label_path, "r") as f:
-                        label = f.read().strip()
-                        labels.append(label)
-                        self.data.append((image_path, label))
-                else:
+                # if os.path.exists(label_path):
+                #     with open(label_path, "r") as f:
+                #         label = f.read().strip()
+                #         labels.append(label)
+                #         self.data.append((image_path, label))
+                # else:
+                #     raise FileNotFoundError(f"폴더 {folder}에 label.txt가 없습니다.")
+                if not os.path.exists(label_path):
                     raise FileNotFoundError(f"폴더 {folder}에 label.txt가 없습니다.")
+                with open(label_path, "r") as f:
+                    label = f.read().strip()
+                
+                if selected_classes is not None and label not in selected_classes:
+                    continue
+                labels.append(label)
+                self.data.append((image_path, label))
+
 
         self.label_encoder.fit(labels)
         self.data = [(image_path, self.label_encoder.transform([label])[0]) 
