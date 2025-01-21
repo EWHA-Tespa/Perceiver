@@ -1,3 +1,4 @@
 /code/data
 /data
 /code/*.pyc
+/code/models/__pycache__

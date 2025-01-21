@@ -197,7 +197,8 @@ class Perceiver(nn.Module):
 
         #self.output_layer = nn.Linear(latent_dim, num_classes)
         self.output_layer = nl.SharableLinear(latent_dim, num_classes)
-
+        self._initialize_weights()
+        
     def forward(self, x):
         """
         x: (B, T, F) = (배치, 시퀀스길이, 피처차원)
@@ -219,6 +220,12 @@ class Perceiver(nn.Module):
         # 최종 latents: (latent_size, B, latent_dim)
         latents = latents.permute(1, 0, 2).mean(dim=1)  # (B, latent_dim)
         return self.output_layer(latents)
+
+    def _initialize_weights(self):
+        for m in self.modules():
+            if isinstance(m, nl.SharableLinear):
+                nn.init.normal_(m.weight, 0, 0.01)
+                nn.init.constant_(m.bias, 0)
 
 class CombinedModel(nn.Module):
     def __init__(self, vocab_size, embed_dim, perceiver_model):
