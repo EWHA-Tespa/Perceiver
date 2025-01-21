@@ -1,3 +1,5 @@
+import copy, math
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -38,7 +40,6 @@ class Ternarizer(torch.autograd.Function):
 
     def backward(self, gradOutput):
         return gradOutput
-
 
 class SharableConv2d(nn.Module):
     """Modified conv with masks for weights."""
@@ -216,3 +217,49 @@ class SharableLinear(nn.Module):
 
         self.weight.data = fn(self.weight.data)
         self.bias.data = fn(self.bias.data)
+
+def clones(module, N):
+    return nn.ModuleList([copy.deepcopy(module) for _ in range(N)])
+
+def attention(query, key, value, mask=None, dropout=None):
+  d_k = query.size(-1)
+  scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(d_k)
+  if mask is not None:
+    scores =scores.masked_fill(mask==0, -1e9)
+  p_attn = scores.softmax(dim=-1)
+  if dropout is not None:
+    p_attn = dropout(p_attn)
+  return torch.matmul(p_attn, value), p_attn
+
+class SharableMultiheadAttention(nn.Module):
+    def __init__(self, embed_dim, num_heads, dropout=0.1):
+        super(SharableMultiheadAttention, self).__init__()
+        self.embed_dim = embed_dim
+        self.num_heads = num_heads
+        self.d_k = embed_dim // num_heads
+        self.linears = clones(nn.Linear(embed_dim))
+        self.attn = None
+        self.dropout = nn.Dropout(dropout)
+
+        self.qkv_proj = nn.Linear(embed_dim, embed_dim * 3)
+        self.out_proj = nn.Linear(embed_dim, embed_dim)
+        self.scale = self.d_k  ** -0.5
+
+    def forward(self, query, key, value, mask=None):
+        if mask is not None:
+            mask = mask.unsqueeze(1)
+        batch_size, seq_length, embed_dim = query.shape
+        qkv = self.qkv_proj(torch.cat[query, key, value], dim=1)
+        qkv = qkv.view(batch_size, seq_length, 3, self.num_heads, self.head_dim)
+        q, k, v = qkv.permute(2, 0, 3, 1, 4)
+        self.attn = attention(query, key, value, mask=mask, dropout=self.dropout)
+
+        x = (
+            x.transpose(1,2)
+            .contiguous()
+            .view(batch_size, -1, self.num_heads * self.d_k)
+        )
+        del query
+        del key
+        del value
+        return self.linears[-1](x)
