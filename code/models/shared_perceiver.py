@@ -154,7 +154,7 @@ class PerceiverBlock(nn.Module):
     def __init__(self, latent_dim, n_heads=8, self_attn_layers=1):
         super().__init__()
         # Cross Attention
-        self.cross_attn = nn.MultiheadAttention(embed_dim=latent_dim, num_heads=n_heads)
+        self.cross_attn = nl.SharableMultiheadAttention(embed_dim=latent_dim, num_heads=n_heads)
         self.cross_ln = nn.LayerNorm(latent_dim)  # 잊지 말고 layernorm
 
         # Self Attention 여러 층
