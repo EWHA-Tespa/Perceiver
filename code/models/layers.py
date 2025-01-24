@@ -222,61 +222,118 @@ class SharableLinear(nn.Module):
         self.weight.data = fn(self.weight.data)
         self.bias.data = fn(self.bias.data)
 
-class SharableMultiheadAttention(nn.Module):
-    def __init__(self, embed_dim, num_heads, dropout=0.0, bias=True, batch_first=False, 
-                 mask_init='1s', mask_scale=1e-2, threshold_fn='binarizer', threshold=None):
-        super(SharableMultiheadAttention, self).__init__()
+
+class MultiheadAttention(nn.Module):
+    def __init__(self, embed_dim, num_heads, dropout=0.1):
+        super().__init__()
+        assert embed_dim % num_heads == 0, "Embedding dimension must be divisible by number of heads"
+        
         self.embed_dim = embed_dim
         self.num_heads = num_heads
-        self.batch_first = batch_first
-        self.dropout = dropout
-        self.head_dim = embed_dim // num_heads
-        assert self.head_dim * num_heads == self.embed_dim, "embed_dim must be divisible by num_heads"
+        self.head_dim = embed_dim // num_heads  # 각 head의 차원
 
-        # Shared weight matrices with binary masks
-        self.in_proj = SharableLinear(embed_dim, 3 * embed_dim, bias=bias,
-                                      mask_init=mask_init, mask_scale=mask_scale,
-                                      threshold_fn=threshold_fn, threshold=threshold)
-        self.out_proj = SharableLinear(embed_dim, embed_dim, bias=bias,
-                                       mask_init=mask_init, mask_scale=mask_scale,
-                                       threshold_fn=threshold_fn, threshold=threshold)
+        # Query, Key, Value projection layers
+        self.q_proj = nn.Linear(embed_dim, embed_dim, bias=False)
+        self.k_proj = nn.Linear(embed_dim, embed_dim, bias=False)
+        self.v_proj = nn.Linear(embed_dim, embed_dim, bias=False)
+        self.out_proj = nn.Linear(embed_dim, embed_dim)  # 최종 출력 프로젝션
 
-    def forward(self, query, key, value, key_padding_mask=None, need_weights=True, attn_mask=None):
-        batch_size, seq_length, _ = query.shape
+        self.dropout = nn.Dropout(dropout)
+        self.scale = self.head_dim ** -0.5  # Scaling factor for dot-product
 
-        if self.batch_first:
-            query, key, value = query.transpose(1, 0), key.transpose(1, 0), value.transpose(1, 0)
+    def forward(self, query, key, value, mask=None):
+        """
+        query, key, value: (seq_len, batch_size, embed_dim)
+        mask: (batch_size, seq_len, seq_len), optional
+        """
+        B, N, D = query.shape  # (seq_len, batch_size, embed_dim)
+        H = self.num_heads
+        head_dim = self.head_dim
 
-        # Linear projections
-        qkv = self.in_proj(query)  # Project only query for self-attention
-        q, k, v = qkv.chunk(3, dim=-1)
+        # 1. Query, Key, Value를 각각 Projection
+        q = self.q_proj(query)  # (N, B, D)
+        k = self.k_proj(key)
+        v = self.v_proj(value)
 
-        # Reshape into multi-head format
-        q = q.view(batch_size, seq_length, self.num_heads, self.head_dim).transpose(1, 2)
-        k = k.view(batch_size, seq_length, self.num_heads, self.head_dim).transpose(1, 2)
-        v = v.view(batch_size, seq_length, self.num_heads, self.head_dim).transpose(1, 2)
+        # 2. Multi-head 차원 변환: (batch, num_heads, seq_len, head_dim)
+        q = rearrange(q, "n b (h d) -> b h n d", h=H)  # (B, H, N, head_dim)
+        k = rearrange(k, "n b (h d) -> b h n d", h=H)
+        v = rearrange(v, "n b (h d) -> b h n d", h=H)
 
-        # Compute scaled dot-product attention
-        attn_weights = torch.matmul(q, k.transpose(-2, -1)) / (self.head_dim ** 0.5)
+        # 3. Scaled Dot-Product Attention 수행
+        attn_scores = einsum("b h i d, b h j d -> b h i j", q, k) * self.scale  # (B, H, N, N)
 
-        if attn_mask is not None:
-            attn_weights += attn_mask
+        # 4. Masking 처리 (선택적)
+        if mask is not None:
+            attn_scores = attn_scores.masked_fill(mask == 0, float('-inf'))
 
-        if key_padding_mask is not None:
-            attn_weights = attn_weights.masked_fill(key_padding_mask.unsqueeze(1).unsqueeze(2), float('-inf'))
+        attn_weights = F.softmax(attn_scores, dim=-1)  # (B, H, N, N)
+        attn_weights = self.dropout(attn_weights)
 
-        attn_weights = F.softmax(attn_weights, dim=-1)
-        attn_weights = F.dropout(attn_weights, p=self.dropout, training=self.training)
+        # 5. Attention 적용 후 값 추출
+        attn_output = einsum("b h i j, b h j d -> b h i d", attn_weights, v)  # (B, H, N, head_dim)
 
-        attn_output = torch.matmul(attn_weights, v)
-        attn_output = attn_output.transpose(1, 2).contiguous().view(batch_size, seq_length, self.embed_dim)
+        # 6. 원래 차원으로 되돌리기
+        attn_output = rearrange(attn_output, "b h n d -> n b (h d)")  # (N, B, D)
 
-        attn_output = self.out_proj(attn_output)
+        # 7. 최종 Linear Projection 후 반환
+        return self.out_proj(attn_output), attn_weights
 
-        if self.batch_first:
-            attn_output = attn_output.transpose(1, 0)
+# class SharableMultiheadAttention(nn.Module):
+#     def __init__(self, embed_dim, num_heads, dropout=0.0, bias=True, batch_first=False, 
+#                  mask_init='1s', mask_scale=1e-2, threshold_fn='binarizer', threshold=None):
+#         super(SharableMultiheadAttention, self).__init__()
+#         self.embed_dim = embed_dim
+#         self.num_heads = num_heads
+#         self.batch_first = batch_first
+#         self.dropout = dropout
+#         self.head_dim = embed_dim // num_heads
+#         assert self.head_dim * num_heads == self.embed_dim, "embed_dim must be divisible by num_heads"
 
-        return attn_output, attn_weights if need_weights else None
+#         # Shared weight matrices with binary masks
+#         self.in_proj = SharableLinear(embed_dim, 3 * embed_dim, bias=bias,
+#                                       mask_init=mask_init, mask_scale=mask_scale,
+#                                       threshold_fn=threshold_fn, threshold=threshold)
+#         self.out_proj = SharableLinear(embed_dim, embed_dim, bias=bias,
+#                                        mask_init=mask_init, mask_scale=mask_scale,
+#                                        threshold_fn=threshold_fn, threshold=threshold)
+
+#     def forward(self, query, key, value, key_padding_mask=None, need_weights=True, attn_mask=None):
+#         batch_size, seq_length, _ = query.shape
+
+#         if self.batch_first:
+#             query, key, value = query.transpose(1, 0), key.transpose(1, 0), value.transpose(1, 0)
+
+#         # Linear projections
+#         qkv = self.in_proj(query)  # Project only query for self-attention
+#         q, k, v = qkv.chunk(3, dim=-1)
+
+#         # Reshape into multi-head format
+#         q = q.view(batch_size, seq_length, self.num_heads, self.head_dim).transpose(1, 2)
+#         k = k.view(batch_size, seq_length, self.num_heads, self.head_dim).transpose(1, 2)
+#         v = v.view(batch_size, seq_length, self.num_heads, self.head_dim).transpose(1, 2)
+
+#         # Compute scaled dot-product attention
+#         attn_weights = torch.matmul(q, k.transpose(-2, -1)) / (self.head_dim ** 0.5)
+
+#         if attn_mask is not None:
+#             attn_weights += attn_mask
+
+#         if key_padding_mask is not None:
+#             attn_weights = attn_weights.masked_fill(key_padding_mask.unsqueeze(1).unsqueeze(2), float('-inf'))
+
+#         attn_weights = F.softmax(attn_weights, dim=-1)
+#         attn_weights = F.dropout(attn_weights, p=self.dropout, training=self.training)
+
+#         attn_output = torch.matmul(attn_weights, v)
+#         attn_output = attn_output.transpose(1, 2).contiguous().view(batch_size, seq_length, self.embed_dim)
+
+#         attn_output = self.out_proj(attn_output)
+
+#         if self.batch_first:
+#             attn_output = attn_output.transpose(1, 0)
+
+#         return attn_output, attn_weights if need_weights else None
 
 # class SharableMultiheadAttention(nn.Module):
 #     def __init__(self, embed_dim, num_heads, bias=True, 
