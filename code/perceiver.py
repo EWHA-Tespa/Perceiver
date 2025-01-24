@@ -11,6 +11,7 @@ import torch
 from torch import nn, einsum
 from torch.utils.data import Dataset
 import torch.nn.functional as F
+import models.layers as nl
 
 def tokenize_data(df, tokenizer=BertTokenizer.from_pretrained('bert-base-uncased'), MAX_LENGTH=128):
     input_ids, attention_masks = [], []
