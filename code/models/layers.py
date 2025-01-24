@@ -5,6 +5,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn.modules.utils import _pair
 from torch.nn.parameter import Parameter
+
+from torch import nn, einsum
+from einops import rearrange, repeat
+
 import pdb
 from pprint import pprint
 
@@ -218,125 +222,243 @@ class SharableLinear(nn.Module):
         self.weight.data = fn(self.weight.data)
         self.bias.data = fn(self.bias.data)
 
-# def clones(module, N):
-#     return nn.ModuleList([copy.deepcopy(module) for _ in range(N)])
-
-# def attention(query, key, value, mask=None, dropout=None):
-#   d_k = query.size(-1)
-#   scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(d_k)
-#   if mask is not None:
-#     scores =scores.masked_fill(mask==0, -1e9)
-#   p_attn = scores.softmax(dim=-1)
-#   if dropout is not None:
-#     p_attn = dropout(p_attn)
-#   return torch.matmul(p_attn, value), p_attn
-
 class SharableMultiheadAttention(nn.Module):
-    def __init__(self, embed_dim, num_heads, bias=True, 
-                 mask_init = '1s', mask_scale=1e-2,
-                 threshold_fn='binarizer', threshold=None):
+    def __init__(self, embed_dim, num_heads, dropout=0.0, bias=True, batch_first=False, 
+                 mask_init='1s', mask_scale=1e-2, threshold_fn='binarizer', threshold=None):
         super(SharableMultiheadAttention, self).__init__()
-        assert embed_dim % num_heads == 0
         self.embed_dim = embed_dim
         self.num_heads = num_heads
-        self.d_k = embed_dim // num_heads
-        self.threshold_fn = threshold_fn
-        self.mask_scale = mask_scale
-        self.mask_init = mask_init
-        #self.scale = self.d_k  ** -0.5
-        #self.linears = clones(SharableLinear(embed_dim))
-        #self.attn = None
-        #self.dropout = nn.Dropout(dropout)     #ToDo: 나중에 필요하게 되면 추가로
-        
-        if threshold is None:
-            threshold = DEFAULT_THRESHOLD
+        self.batch_first = batch_first
+        self.dropout = dropout
+        self.head_dim = embed_dim // num_heads
+        assert self.head_dim * num_heads == self.embed_dim, "embed_dim must be divisible by num_heads"
 
-        self.info = {
-            'threshold_fn': threshold_fn,
-            'threshold': threshold,
-        }
-
-        # self.q_proj = nn.Linear(embed_dim, embed_dim, bias=bias) 
-        # self.k_proj = nn.Linear(embed_dim, embed_dim, bias=bias)
-        # self.v_proj = nn.Linear(embed_dim, embed_dim, bias=bias)
-        # self.out_proj = nn.Linear(embed_dim, embed_dim, bias=bias)
-        self.q_proj = SharableLinear(embed_dim, embed_dim, bias=bias,
-                                     mask_init=mask_init, mask_scale=mask_scale,
-                                     threshold_fn=threshold_fn, threshold=threshold)
-        self.k_proj = SharableLinear(embed_dim, embed_dim, bias=bias,
-                                     mask_init=mask_init, mask_scale=mask_scale,
-                                     threshold_fn=threshold_fn, threshold=threshold)
-        self.v_proj = SharableLinear(embed_dim, embed_dim, bias=bias,
-                                     mask_init=mask_init, mask_scale=mask_scale,
-                                     threshold_fn=threshold_fn, threshold=threshold)
+        # Shared weight matrices with binary masks
+        self.in_proj = SharableLinear(embed_dim, 3 * embed_dim, bias=bias,
+                                      mask_init=mask_init, mask_scale=mask_scale,
+                                      threshold_fn=threshold_fn, threshold=threshold)
         self.out_proj = SharableLinear(embed_dim, embed_dim, bias=bias,
                                        mask_init=mask_init, mask_scale=mask_scale,
                                        threshold_fn=threshold_fn, threshold=threshold)
 
-        # self.piggymask = None   # 모든 layer의 piggymask를 하나로 퉁치기기
-        self.piggymask_q = None
-        self.piggymask_k = None
-        self.piggymask_v = None
-        self.piggymask_out = None
+    def forward(self, query, key, value, key_padding_mask=None, need_weights=True, attn_mask=None):
+        batch_size, seq_length, _ = query.shape
 
-        if threshold_fn == 'binarizer':
-            self.threshold_fn = Binarizer.apply
-        elif threshold_fn == 'ternarizer':
-            self.threshold_fn = Ternarizer(threshold=threshold)
+        if self.batch_first:
+            query, key, value = query.transpose(1, 0), key.transpose(1, 0), value.transpose(1, 0)
 
-    def apply_piggymask(self, weight, mask):
-            """Apply the piggyback mask to the weight matrix."""
-            if mask is not None:
-                mask_thresholded = self.threshold_fn(mask, self.info['threshold'])
-                masked_weight = mask_thresholded * weight
-            else:
-                masked_weight = weight
-            return masked_weight
-    
-    def forward(self, query, key, value, attn_mask=None, need_weights=False):
-        batch_size, seq_length, _ = query.size()
-        q_weight = self.apply_piggymask(self.q_proj, self.piggymask_q)
-        k_weight = self.apply_piggymask(self.k_proj, self.piggymask_k)
-        v_weight = self.apply_piggymask(self.v_proj, self.piggymask_v)
-        out_weight = self.apply_piggymask(self.out_proj, self.piggymask_out)
+        # Linear projections
+        qkv = self.in_proj(query)  # Project only query for self-attention
+        q, k, v = qkv.chunk(3, dim=-1)
 
-        q = F.linear(query, q_weight, self.q_proj.bias)
-        k = F.linear(key, k_weight, self.k_proj.bias)
-        v = F.linear(value, v_weight, self.v_proj.bias)
-
+        # Reshape into multi-head format
         q = q.view(batch_size, seq_length, self.num_heads, self.head_dim).transpose(1, 2)
         k = k.view(batch_size, seq_length, self.num_heads, self.head_dim).transpose(1, 2)
         v = v.view(batch_size, seq_length, self.num_heads, self.head_dim).transpose(1, 2)
 
-        attn_scores = torch.matmul(q, k.transpose(-2, -1)) / (self.head_dim ** 0.5)
-        
+        # Compute scaled dot-product attention
+        attn_weights = torch.matmul(q, k.transpose(-2, -1)) / (self.head_dim ** 0.5)
+
         if attn_mask is not None:
-            attn_scores += attn_mask
+            attn_weights += attn_mask
 
-        attn_probs = F.softmax(attn_scores, dim=-1)
-        attn_output = torch.matmul(attn_probs, v)
+        if key_padding_mask is not None:
+            attn_weights = attn_weights.masked_fill(key_padding_mask.unsqueeze(1).unsqueeze(2), float('-inf'))
+
+        attn_weights = F.softmax(attn_weights, dim=-1)
+        attn_weights = F.dropout(attn_weights, p=self.dropout, training=self.training)
+
+        attn_output = torch.matmul(attn_weights, v)
         attn_output = attn_output.transpose(1, 2).contiguous().view(batch_size, seq_length, self.embed_dim)
-        attn_output = F.linear(attn_output, out_weight, self.out_proj.bias)
 
-        if need_weights:
-            return attn_output, attn_probs
-        else:
-            return attn_output
-    
-    def __repr__(self):
-        s = {'{name} (embed_dim={embed_dim}, num_heads={num_heads})'}
-        return s.format(name=self.__class__.__name__, **self.__dict__)
-    
-    def set_piggymask(self, masks):
-        """Set Piggyback Masks for Shared Attention Weights"""
-        self.piggymask_q = Parameter(masks['q_proj'], requires_grad=True)
-        self.piggymask_k = Parameter(masks['k_proj'], requires_grad=True)
-        self.piggymask_v = Parameter(masks['v_proj'], requires_grad=True)
-        self.piggymask_out = Parameter(masks['out_proj'], requires_grad=True)
+        attn_output = self.out_proj(attn_output)
 
-    def reinitialize_piggymask(self):
-        """Reinitialize Piggyback Masks for a new task."""
-        self.piggymask_q = Parameter(torch.ones_like(self.q_proj.weight) * self.mask_scale, requires_grad=True)
-        self.piggymask_k = Parameter(torch.ones_like(self.k_proj.weight) * self.mask_scale, requires_grad=True)
-        self.piggymask_v = Parameter(torch.ones_like(self.v_proj.weight) * self.mask_scale, requires_grad=True)
-        self.piggymask_out = Parameter(torch.ones_like(self.out_proj.weight) * self.mask_scale, requires_grad=True)
+        if self.batch_first:
+            attn_output = attn_output.transpose(1, 0)
+
+        return attn_output, attn_weights if need_weights else None
+
+# class SharableMultiheadAttention(nn.Module):
+#     def __init__(self, embed_dim, num_heads, bias=True, 
+#                  mask_init = '1s', mask_scale=1e-2,
+#                  threshold_fn='binarizer', threshold=None):
+#         super(SharableMultiheadAttention, self).__init__()
+#         assert embed_dim % num_heads == 0
+
+#         self.embed_dim = embed_dim
+#         self.num_heads = num_heads
+#         self.head_dim = embed_dim // num_heads
+#         self.threshold_fn = threshold_fn
+#         self.mask_scale = mask_scale
+#         self.mask_init = mask_init
+#         #self.scale = self.d_k  ** -0.5
+#         #self.linears = clones(SharableLinear(embed_dim))
+#         #self.attn = None
+#         #self.dropout = nn.Dropout(dropout)     #ToDo: 나중에 필요하게 되면 추가로
+        
+#         if threshold is None:
+#             threshold = DEFAULT_THRESHOLD
+
+#         self.info = {
+#             'threshold_fn': threshold_fn,
+#             'threshold': threshold,
+#         }
+
+#         # self.q_proj = nn.Linear(embed_dim, embed_dim, bias=bias) 
+#         # self.k_proj = nn.Linear(embed_dim, embed_dim, bias=bias)
+#         # self.v_proj = nn.Linear(embed_dim, embed_dim, bias=bias)
+#         # self.out_proj = nn.Linear(embed_dim, embed_dim, bias=bias)
+#         self.q_proj = SharableLinear(embed_dim, embed_dim, bias=bias,
+#                                      mask_init=mask_init, mask_scale=mask_scale,
+#                                      threshold_fn=threshold_fn, threshold=threshold)
+#         self.k_proj = SharableLinear(embed_dim, embed_dim, bias=bias,
+#                                      mask_init=mask_init, mask_scale=mask_scale,
+#                                      threshold_fn=threshold_fn, threshold=threshold)
+#         self.v_proj = SharableLinear(embed_dim, embed_dim, bias=bias,
+#                                      mask_init=mask_init, mask_scale=mask_scale,
+#                                      threshold_fn=threshold_fn, threshold=threshold)
+#         self.out_proj = SharableLinear(embed_dim, embed_dim, bias=bias,
+#                                        mask_init=mask_init, mask_scale=mask_scale,
+#                                        threshold_fn=threshold_fn, threshold=threshold)
+
+#         # self.piggymask = None   # 모든 layer의 piggymask를 하나로 퉁치기기
+#         self.piggymask_q = None
+#         self.piggymask_k = None
+#         self.piggymask_v = None
+#         self.piggymask_out = None
+
+#         if threshold_fn == 'binarizer':
+#             self.threshold_fn = Binarizer.apply
+#         elif threshold_fn == 'ternarizer':
+#             self.threshold_fn = Ternarizer(threshold=threshold)
+
+#     def apply_piggymask(self, weight, mask):
+#             """Apply the piggyback mask to the weight matrix."""
+#             if mask is not None:
+#                 mask_thresholded = self.threshold_fn(mask, self.info['threshold'])
+#                 masked_weight = mask_thresholded * weight
+#             else:
+#                 masked_weight = weight
+#             return masked_weight
+    
+#     def forward(self, query, key, value, attn_mask=None, need_weights=False):
+#         # batch_size, seq_length, _ = query.size()
+#         batch_size = query.shape[1]  # batch_size를 동적으로 가져옴
+#         print(f'batch_size={batch_size}')
+#         query_len, key_len = query.shape[0], key.shape[0]
+#         print(query.shape, key.shape)
+#         print(f'query_len={query_len}, key_len={key_len}')
+
+#         assert self.embed_dim == self.num_heads * self.head_dim, \
+#             f"embed_dim ({self.embed_dim}) must be equal to num_heads ({self.num_heads}) * head_dim ({self.head_dim})"
+
+#         q_weight = self.apply_piggymask(self.q_proj.weight, self.piggymask_q)
+#         k_weight = self.apply_piggymask(self.k_proj.weight, self.piggymask_k)
+#         v_weight = self.apply_piggymask(self.v_proj.weight, self.piggymask_v)
+#         out_weight = self.apply_piggymask(self.out_proj.weight, self.piggymask_out)
+
+
+#         q = F.linear(query, q_weight, self.q_proj.bias)
+#         k = F.linear(key, k_weight, self.k_proj.bias)
+#         v = F.linear(value, v_weight, self.v_proj.bias)
+
+#         # q = q.view(batch_size, seq_length, self.num_heads, self.head_dim).transpose(1, 2)
+#         # k = k.view(batch_size, seq_length, self.num_heads, self.head_dim).transpose(1, 2)
+#         # v = v.view(batch_size, seq_length, self.num_heads, self.head_dim).transpose(1, 2)
+#         print(f"q.shape before view: {q.shape}")  # 디버깅 추가
+#         print(f"k.shape before view: {k.shape}")
+#         print(f"v.shape before view: {v.shape}")
+#         head_dim = self.embed_dim // self.num_heads
+#         q = q.view(batch_size, query_len, self.num_heads, head_dim).transpose(1, 2)
+#         k = k.view(batch_size, key_len, self.num_heads, head_dim).transpose(1, 2)
+#         v = v.view(batch_size, key_len, self.num_heads, head_dim).transpose(1, 2)
+
+#         print(f"q.shape after view: {q.shape}")  # 디버깅 추가
+#         print(f"k.shape after view: {k.shape}")
+#         print(f"v.shape after view: {v.shape}")
+#         attn_scores = torch.matmul(q, k.transpose(-2, -1)) / (self.head_dim ** 0.5)
+        
+#         if attn_mask is not None:
+#             attn_scores += attn_mask
+
+#         attn_probs = F.softmax(attn_scores, dim=-1)
+#         attn_output = torch.matmul(attn_probs, v)
+#         attn_output = attn_output.transpose(1, 2).contiguous().view(batch_size, query_len, self.embed_dim)
+#         attn_output = F.linear(attn_output, out_weight, self.out_proj.bias)
+
+#         if need_weights:
+#             return attn_output, attn_probs
+#         else:
+#             return attn_output
+    
+#     def __repr__(self):
+#         s = {'{name} (embed_dim={embed_dim}, num_heads={num_heads})'}
+#         return s.format(name=self.__class__.__name__, **self.__dict__)
+    
+#     def set_piggymask(self, masks):
+#         """Set Piggyback Masks for Shared Attention Weights"""
+#         self.piggymask_q = Parameter(masks['q_proj'], requires_grad=True)
+#         self.piggymask_k = Parameter(masks['k_proj'], requires_grad=True)
+#         self.piggymask_v = Parameter(masks['v_proj'], requires_grad=True)
+#         self.piggymask_out = Parameter(masks['out_proj'], requires_grad=True)
+
+#     def reinitialize_piggymask(self):
+#         """Reinitialize Piggyback Masks for a new task."""
+#         self.piggymask_q = Parameter(torch.ones_like(self.q_proj.weight) * self.mask_scale, requires_grad=True)
+#         self.piggymask_k = Parameter(torch.ones_like(self.k_proj.weight) * self.mask_scale, requires_grad=True)
+#         self.piggymask_v = Parameter(torch.ones_like(self.v_proj.weight) * self.mask_scale, requires_grad=True)
+#         self.piggymask_out = Parameter(torch.ones_like(self.out_proj.weight) * self.mask_scale, requires_grad=True)
+
+
+# def exists(val):
+#     return val is not None
+
+# def default(val, d):
+#     return val if exists(val) else d
+
+# --- https://github.com/lucidrains/perceiver-pytorch/blob/main/perceiver_pytorch/perceiver_pytorch.py ---
+class Attention(nn.Module):
+    def __init__(self, embed_dim, context_dim=None, num_heads=8, dim_head=64, dropout=0.):
+        super().__init__()
+        inner_dim = dim_head * num_heads
+        context_dim = context_dim if context_dim is not None else embed_dim  # 기본값 설정
+        self.scale = dim_head ** -0.5
+        self.num_heads = num_heads
+        
+        # Query, Key-Value 생성
+        self.to_q = nn.Linear(embed_dim, inner_dim, bias=False)
+        self.to_kv = nn.Linear(context_dim, inner_dim * 2, bias=False)
+        
+        self.dropout = nn.Dropout(dropout)
+        self.to_out = nn.Linear(inner_dim, embed_dim)
+
+    def forward(self, query, context=None, mask=None):
+        h = self.num_heads
+        context = context if context is not None else query  # Cross-Attention이 아니면 Self-Attention
+
+        # Query, Key, Value 생성
+        q = self.to_q(query)
+        k, v = self.to_kv(context).chunk(2, dim=-1)
+
+        # Multi-head 차원 변환 (b: batch, n: seq_len, h: num_heads, d: head_dim)
+        q, k, v = map(lambda t: rearrange(t, 'b n (h d) -> (b h) n d', h=h), (q, k, v))
+
+        # Attention Score 계산 (Scaled Dot-Product Attention)
+        sim = einsum('b i d, b j d -> b i j', q, k) * self.scale
+
+        # Masking 처리
+        if mask is not None:
+            mask = rearrange(mask, 'b ... -> b (...)')
+            max_neg_value = -torch.finfo(sim.dtype).max
+            mask = repeat(mask, 'b j -> (b h) () j', h=h)
+            sim.masked_fill_(~mask, max_neg_value)
+
+        # Softmax 및 Dropout 적용
+        attn = sim.softmax(dim=-1)
+        attn = self.dropout(attn)
+
+        # Attention 적용 후 원래 차원으로 변환
+        out = einsum('b i j, b j d -> b i d', attn, v)
+        out = rearrange(out, '(b h) n d -> b n (h d)', h=h)
+        return self.to_out(out)
+    

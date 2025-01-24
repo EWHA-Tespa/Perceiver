@@ -184,7 +184,7 @@ class Perceiver(nn.Module):
         super().__init__()
         self.latents = nn.Parameter(torch.randn(latent_size, latent_dim))
         #self.input_projection = nn.Linear(input_dim, latent_dim)
-        self.input_projection = nl.SharableLinear(input_dim, latent_dim)
+        self.input_projection = nl.SharableLinear(input_dim, latent_dim)    # 잠깐만 이거 뭐임
         # 반복될 PerceiverBlock을 여러 개 쌓는다.
         self.blocks = nn.ModuleList([
             PerceiverBlock(
