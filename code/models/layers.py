@@ -224,22 +224,57 @@ class SharableLinear(nn.Module):
 
 
 class MultiheadAttention(nn.Module):
-    def __init__(self, embed_dim, num_heads, dropout=0.1):
-        super().__init__()
+    def __init__(self, embed_dim, num_heads, dropout=0.1,
+                 mask_init='1s', mask_scale=1e-2, 
+                 threshold_fn='binarizer', threshold=None):
+        super(MultiheadAttention, self).__init__()
         assert embed_dim % num_heads == 0, "Embedding dimension must be divisible by number of heads"
         
         self.embed_dim = embed_dim
         self.num_heads = num_heads
         self.head_dim = embed_dim // num_heads  # 각 head의 차원
+        self.threshold_fn = threshold_fn
+        self.mask_scale = mask_scale
+        self.mask_init = mask_init
 
+        if threshold is None:
+            threshold = DEFAULT_THRESHOLD
+        self.info = {
+            'threshold_fn': threshold_fn,
+            'threshold': threshold,
+        }
+
+        self.q_proj_weight = Parameter(torch.Tensor(
+           embed_dim, embed_dim), requires_grad=True)
+        self.k_proj_weight = Parameter(torch.Tensor(
+            embed_dim, embed_dim), requires_grad=True)
+        self.v_proj_weight = Parameter(torch.Tensor(
+            embed_dim, embed_dim), requires_grad=True)
+        self.o_proj_weight = Parameter(torch.Tensor(
+            embed_dim, embed_dim), requires_grad=True)
+        
+        # ToDo: Enable Dropout as well
+        self.piggymask = None
+        
         # Query, Key, Value projection layers
-        self.q_proj = nn.Linear(embed_dim, embed_dim, bias=False)
-        self.k_proj = nn.Linear(embed_dim, embed_dim, bias=False)
-        self.v_proj = nn.Linear(embed_dim, embed_dim, bias=False)
-        self.out_proj = nn.Linear(embed_dim, embed_dim)  # 최종 출력 프로젝션
+        # self.q_proj = nn.Linear(embed_dim, embed_dim, bias=False)
+        # self.k_proj = nn.Linear(embed_dim, embed_dim, bias=False)
+        # self.v_proj = nn.Linear(embed_dim, embed_dim, bias=False)
+        # self.out_proj = nn.Linear(embed_dim, embed_dim)  # 최종 출력 프로젝션
 
-        self.dropout = nn.Dropout(dropout)
+        # self.dropout = nn.Dropout(dropout)
         self.scale = self.head_dim ** -0.5  # Scaling factor for dot-product
+        
+        if threshold_fn == 'binarizer':
+            self.threshold_fn_q = Binarizer.apply
+            self.threshold_fn_k = Binarizer.apply
+            self.threshold_fn_v = Binarizer.apply
+            self.threshold_fn_o = Binarizer.apply
+        elif threshold_fn == 'tenarizer':
+            self.threshold_fn_q = Ternarizer(threshold=threshold)
+            self.threshold_fn_k = Ternarizer(threshold=threshold)
+            self.threshold_fn_v = Ternarizer(threshold=threshold)
+            self.threshold_fn_o = Ternarizer(threshold=threshold)
 
     def forward(self, query, key, value, mask=None):
         """
@@ -250,6 +285,23 @@ class MultiheadAttention(nn.Module):
         H = self.num_heads
         head_dim = self.head_dim
 
+        if self.piggymask is not None:
+            mask_thresholded_q = self.threshold_fn_q(self.piggymask, self.info['threshold'])
+            mask_thresholded_k = self.threshold_fn_k(self.piggymask, self.info['threshold'])
+            mask_thresholded_v = self.threshold_fn_v(self.piggymask, self.info['threshold'])
+            mask_thresholded_o = self.threshold_fn_o(self.piggymask, self.info['threshold'])
+
+            q_proj_weight = mask_thresholded_q * self.q_proj_weight
+            k_proj_weight = mask_thresholded_k * self.k_proj_weight
+            v_proj_weight = mask_thresholded_v * self.v_proj_weight
+            o_proj_weight = mask_thresholded_o * self.o_proj_weight
+        else:
+            q_proj_weight = self.q_proj_weight
+            k_proj_weight = self.k_proj_weight
+            v_proj_weight = self.v_proj_weight
+            o_proj_weight = self.o_proj_weight
+    
+    ###################### ToDo: 여기서부터 어떻게 구현할 것인지를 고민해야함 ####################
         # 1. Query, Key, Value를 각각 Projection
         q = self.q_proj(query)  # (N, B, D)
         k = self.k_proj(key)
