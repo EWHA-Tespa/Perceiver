@@ -220,7 +220,8 @@ class SharableLinear(nn.Module):
                 self._buffers[key] = fn(buf)
 
         self.weight.data = fn(self.weight.data)
-        self.bias.data = fn(self.bias.data)
+        if self.bias is not None:
+            self.bias.data = fn(self.bias.data)
 
 
 class MultiheadAttention(nn.Module):
@@ -237,25 +238,17 @@ class MultiheadAttention(nn.Module):
         self.mask_scale = mask_scale
         self.mask_init = mask_init
 
-        if threshold is None:
-            threshold = DEFAULT_THRESHOLD
-        self.info = {
-            'threshold_fn': threshold_fn,
-            'threshold': threshold,
-        }
+        self.q_proj = SharableLinear(embed_dim, embed_dim, bias=False, mask_init=mask_init,
+                                     mask_scale=mask_scale, threshold_fn=threshold_fn, threshold=threshold)
+        self.k_proj = SharableLinear(embed_dim, embed_dim, bias=False, mask_init=mask_init,
+                                     mask_scale=mask_scale, threshold_fn=threshold_fn, threshold=threshold)
+        self.v_proj = SharableLinear(embed_dim, embed_dim, bias=False, mask_init=mask_init,
+                                     mask_scale=mask_scale, threshold_fn=threshold_fn, threshold=threshold)
+        self.out_proj = SharableLinear(embed_dim, embed_dim, bias=True, mask_init=mask_init,
+                                     mask_scale=mask_scale, threshold_fn=threshold_fn, threshold=threshold)
+        self.Dropout = nn.Dropout(dropout)
+        self.scale = self.head_dim ** -0.5  # Scaling factor for dot-product
 
-        self.q_proj_weight = Parameter(torch.Tensor(
-           embed_dim, embed_dim), requires_grad=True)
-        self.k_proj_weight = Parameter(torch.Tensor(
-            embed_dim, embed_dim), requires_grad=True)
-        self.v_proj_weight = Parameter(torch.Tensor(
-            embed_dim, embed_dim), requires_grad=True)
-        self.o_proj_weight = Parameter(torch.Tensor(
-            embed_dim, embed_dim), requires_grad=True)
-        
-        # ToDo: Enable Dropout as well
-        self.piggymask = None
-        
         # Query, Key, Value projection layers
         # self.q_proj = nn.Linear(embed_dim, embed_dim, bias=False)
         # self.k_proj = nn.Linear(embed_dim, embed_dim, bias=False)
@@ -263,18 +256,7 @@ class MultiheadAttention(nn.Module):
         # self.out_proj = nn.Linear(embed_dim, embed_dim)  # 최종 출력 프로젝션
 
         # self.dropout = nn.Dropout(dropout)
-        self.scale = self.head_dim ** -0.5  # Scaling factor for dot-product
-        
-        if threshold_fn == 'binarizer':
-            self.threshold_fn_q = Binarizer.apply
-            self.threshold_fn_k = Binarizer.apply
-            self.threshold_fn_v = Binarizer.apply
-            self.threshold_fn_o = Binarizer.apply
-        elif threshold_fn == 'tenarizer':
-            self.threshold_fn_q = Ternarizer(threshold=threshold)
-            self.threshold_fn_k = Ternarizer(threshold=threshold)
-            self.threshold_fn_v = Ternarizer(threshold=threshold)
-            self.threshold_fn_o = Ternarizer(threshold=threshold)
+        # self.scale = self.head_dim ** -0.5  # Scaling factor for dot-product
 
     def forward(self, query, key, value, mask=None):
         """
@@ -285,23 +267,6 @@ class MultiheadAttention(nn.Module):
         H = self.num_heads
         head_dim = self.head_dim
 
-        if self.piggymask is not None:
-            mask_thresholded_q = self.threshold_fn_q(self.piggymask, self.info['threshold'])
-            mask_thresholded_k = self.threshold_fn_k(self.piggymask, self.info['threshold'])
-            mask_thresholded_v = self.threshold_fn_v(self.piggymask, self.info['threshold'])
-            mask_thresholded_o = self.threshold_fn_o(self.piggymask, self.info['threshold'])
-
-            q_proj_weight = mask_thresholded_q * self.q_proj_weight
-            k_proj_weight = mask_thresholded_k * self.k_proj_weight
-            v_proj_weight = mask_thresholded_v * self.v_proj_weight
-            o_proj_weight = mask_thresholded_o * self.o_proj_weight
-        else:
-            q_proj_weight = self.q_proj_weight
-            k_proj_weight = self.k_proj_weight
-            v_proj_weight = self.v_proj_weight
-            o_proj_weight = self.o_proj_weight
-    
-    ###################### ToDo: 여기서부터 어떻게 구현할 것인지를 고민해야함 ####################
         # 1. Query, Key, Value를 각각 Projection
         q = self.q_proj(query)  # (N, B, D)
         k = self.k_proj(key)
@@ -320,7 +285,7 @@ class MultiheadAttention(nn.Module):
             attn_scores = attn_scores.masked_fill(mask == 0, float('-inf'))
 
         attn_weights = F.softmax(attn_scores, dim=-1)  # (B, H, N, N)
-        attn_weights = self.dropout(attn_weights)
+        attn_weights = self.Dropout(attn_weights)
 
         # 5. Attention 적용 후 값 추출
         attn_output = einsum("b h i j, b h j d -> b h i d", attn_weights, v)  # (B, H, N, head_dim)

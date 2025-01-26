@@ -225,7 +225,14 @@ class Perceiver(nn.Module):
         for m in self.modules():
             if isinstance(m, nl.SharableLinear):
                 nn.init.normal_(m.weight, 0, 0.01)
-                nn.init.constant_(m.bias, 0)
+                if m.bias is not None:
+                    nn.init.constant_(m.bias, 0)
+            elif isinstance(m, nl.MultiheadAttention):
+                for param in m.parameters():
+                    if param.dim() > 1:
+                        nn.init.xavier_uniform_(param)
+                    else:
+                        nn.init.constant_(param, 0)
 
 class CombinedModel(nn.Module):
     def __init__(self, vocab_size, embed_dim, perceiver_model):
