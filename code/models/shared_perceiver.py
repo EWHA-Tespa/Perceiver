@@ -154,7 +154,7 @@ class PerceiverBlock(nn.Module):
     def __init__(self, latent_dim, n_heads=8, self_attn_layers=1):
         super().__init__()
         # Cross Attention
-        self.cross_attn = nl.SharableMultiheadAttention(embed_dim=latent_dim, num_heads=n_heads)
+        self.cross_attn = nl.MultiheadAttention(embed_dim=latent_dim, num_heads=n_heads)
         self.cross_ln = nn.LayerNorm(latent_dim)  # 잊지 말고 layernorm
 
         # Self Attention 여러 층
@@ -184,7 +184,7 @@ class Perceiver(nn.Module):
         super().__init__()
         self.latents = nn.Parameter(torch.randn(latent_size, latent_dim))
         #self.input_projection = nn.Linear(input_dim, latent_dim)
-        self.input_projection = nl.SharableLinear(input_dim, latent_dim)
+        self.input_projection = nl.SharableLinear(input_dim, latent_dim)    # 잠깐만 이거 뭐임
         # 반복될 PerceiverBlock을 여러 개 쌓는다.
         self.blocks = nn.ModuleList([
             PerceiverBlock(
@@ -225,7 +225,14 @@ class Perceiver(nn.Module):
         for m in self.modules():
             if isinstance(m, nl.SharableLinear):
                 nn.init.normal_(m.weight, 0, 0.01)
-                nn.init.constant_(m.bias, 0)
+                if m.bias is not None:
+                    nn.init.constant_(m.bias, 0)
+            elif isinstance(m, nl.MultiheadAttention):
+                for param in m.parameters():
+                    if param.dim() > 1:
+                        nn.init.xavier_uniform_(param)
+                    else:
+                        nn.init.constant_(param, 0)
 
 class CombinedModel(nn.Module):
     def __init__(self, vocab_size, embed_dim, perceiver_model):
