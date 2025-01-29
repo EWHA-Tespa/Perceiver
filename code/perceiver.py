@@ -196,12 +196,14 @@ class Perceiver(nn.Module):
 
         self.output_layer = nn.Linear(latent_dim, num_classes)
 
-    def forward(self, x):
+    def forward(self, x, attention_mask = None):
         """
         x: (B, T, F) = (배치, 시퀀스길이, 피처차원)
         """
         B, T, F = x.size()
         x = self.input_projection(x)                 # (B, T, latent_dim)
+        # print(f"🔹 입력 데이터 크기: {x.shape}")
+        # print(f"🔹 Linear 레이어 가중치 크기: {self.input_projection.weight.shape}")
 
         # latents: (latent_size, latent_dim) -> 배치 차원 확장 (B, latent_size, latent_dim)
         latents = self.latents.unsqueeze(0).expand(B, -1, -1)
