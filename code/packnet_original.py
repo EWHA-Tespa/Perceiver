@@ -196,7 +196,7 @@ class Manager:
 
 #  데이터 로드 함수 (Pickle 파일에서 `DataLoader` 불러오기)
 def load_dataloader(pkl_path):
-    print(f"🔹 {pkl_path}에서 DataLoader 로드 중...")
+    print(f"{pkl_path}에서 DataLoader 로드 중...")
     with open(pkl_path, "rb") as f:
         dataloader = pickle.load(f)
     return dataloader
@@ -212,7 +212,7 @@ def packnet_train_prune_infer(args, save_path):
     #     input_dim=768,       # BERT 기반 텍스트 입력 차원 또는 이미지 패치 차원
     #     latent_dim=512,      # Perceiver의 Latent 차원
     #     latent_size=128,     # Latent 개수
-    #     num_classes=100,     # ✅ Perceiver 모델 내에서 num_classes를 지정
+    #     num_classes=100,     # Perceiver 모델 내에서 num_classes를 지정
     #     num_blocks=6,        # Perceiver 블록 개수
     #     self_attn_layers_per_block=2   # Self-Attention 레이어 개수
     # )).to(device)
