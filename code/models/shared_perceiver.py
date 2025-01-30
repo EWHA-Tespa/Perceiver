@@ -179,9 +179,16 @@ class PerceiverBlock(nn.Module):
         return latents
 
 class Perceiver(nn.Module):
-    def __init__(self, input_dim, latent_dim, latent_size, num_classes,
-                 num_blocks, self_attn_layers_per_block=1):
+    def __init__(self, dataset_history, dataset2num_classes, network_width_multiplier,
+                 shared_layer_info, input_dim, latent_dim, latent_size, num_classes,
+                 num_blocks, self_attn_layers_per_block=1,
+                 groups=1, width_per_group=64):
         super().__init__()
+        self.network_width_multiplier = network_width_multiplier
+        self.shared_layer_info = shared_layer_info
+        self.inplanes= int(64 * network_width_multiplier)
+        self.dilation = 1
+    
         self.latents = nn.Parameter(torch.randn(latent_size, latent_dim))
         #self.input_projection = nn.Linear(input_dim, latent_dim)
         self.input_projection = nl.SharableLinear(input_dim, latent_dim)    # 잠깐만 이거 뭐임
@@ -197,8 +204,30 @@ class Perceiver(nn.Module):
 
         #self.output_layer = nn.Linear(latent_dim, num_classes)
         self.output_layer = nl.SharableLinear(latent_dim, num_classes)
+        self.datasets, self.classifiers = dataset_history, nn.ModuleList()
+        self.dataset2num_classes = dataset2num_classes
+
+        if self.datasets:
+            self._reconstruct_classifiers()
+               
         self._initialize_weights()
-        
+    
+    def _reconstruct_classifiers(self):
+        for dataset, num_classes in self.dataset2num_classes.items():
+            self.classifiers.append(nn.Linear(int, self.shared_layer_info[dataset]['network_width_multiplier'] * 2048) ,num_classes) # 모델 expand 할 필요 있을 때, Linear 추가함.
+    
+    def add_dataset(self, dataset, num_classes):
+        if dataset not in self.datasets:
+            self.datasets.append(dataset)
+            self.dataset2num_classes[dataset] = num_classes
+            self.classifiers.append(nn.Linear(int(2048 * self.network_width_multiplier), num_classes))
+            nn.init.normal_(self.classifiers[self.datasets.index(dataset)].weight, 0, 0.01)
+            nn.init.constant_(self.classifiers[self.datasets.index(dataset)].bias, 0)
+    
+    def set_dataset(self, dataset):
+        assert dataset in self.datasets
+        self.classifiers = self.classifiers[self.datasets.index(dataset)]
+
     def forward(self, x):
         """
         x: (B, T, F) = (배치, 시퀀스길이, 피처차원)
