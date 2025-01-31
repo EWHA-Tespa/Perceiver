@@ -225,6 +225,6 @@ class CombinedModel(nn.Module):
         self.embedding = nn.Embedding(vocab_size, embed_dim)
         self.perceiver = perceiver_model
 
-    def forward(self, input_ids):
+    def forward(self, input_ids, attention_mask=None):
         embeddings = self.embedding(input_ids)  # (B, T, embed_dim)
         return self.perceiver(embeddings)  
