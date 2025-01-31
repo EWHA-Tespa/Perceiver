@@ -8,9 +8,9 @@ import models.layers as nl
 def save_checkpoint(model, optimizer, epoch_idx, save_folder, shared_layer_info, dataset, idx=None):
     """모델의 체크포인트를 저장하는 함수"""
     if idx is not None:
-        filepath = f"{save_folder}/checkpoint_{idx}_epoch_{epoch_idx}.pth.tar"
+        filepath = f"{save_folder}/{dataset}_checkpoint_{idx}_epoch_{epoch_idx}.pth.tar"
     else:
-        filepath = f"{save_folder}/checkpoint_epoch_{epoch_idx}.pth.tar"
+        filepath = f"{save_folder}/{dataset}_checkpoint_epoch_{epoch_idx}.pth.tar"
     if dataset not in shared_layer_info:
         shared_layer_info[dataset] = {
             'bias': {},
