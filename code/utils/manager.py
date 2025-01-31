@@ -11,6 +11,7 @@ def save_checkpoint(model, optimizer, epoch_idx, save_folder, shared_layer_info,
         filepath = f"{save_folder}/{dataset}_checkpoint_{idx}_epoch_{epoch_idx}.pth.tar"
     else:
         filepath = f"{save_folder}/{dataset}_checkpoint_epoch_{epoch_idx}.pth.tar"
+
     if dataset not in shared_layer_info:
         shared_layer_info[dataset] = {
             'bias': {},
@@ -58,6 +59,7 @@ def save_checkpoint(model, optimizer, epoch_idx, save_folder, shared_layer_info,
             'optimizer_state_dict': optimizer.state_dict(),
             'epoch': epoch_idx
         }
+
 
     torch.save(checkpoint, filepath)
     print(f"Checkpoint saved at {filepath}")
