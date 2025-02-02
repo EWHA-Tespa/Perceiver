@@ -11,6 +11,7 @@ def save_checkpoint(model, optimizer, epoch_idx, save_folder, shared_layer_info,
         filepath = f"{save_folder}/{dataset}_checkpoint_{idx}_epoch_{epoch_idx}.pth.tar"
     else:
         filepath = f"{save_folder}/{dataset}_checkpoint_epoch_{epoch_idx}.pth.tar"
+
     if dataset not in shared_layer_info:
         shared_layer_info[dataset] = {
             'bias': {},
@@ -37,15 +38,28 @@ def save_checkpoint(model, optimizer, epoch_idx, save_folder, shared_layer_info,
             shared_layer_info[dataset]['prelu_layer_weight'][name] = module.weight
 
     # 체크포인트 저장할 딕셔너리
-    checkpoint = {
-        'model_state_dict': model.state_dict(),
-        'dataset_history': model.perceiver.datasets,
-        'dataset2num_classes': model.perceiver.dataset2num_classes,
-        'masks': model.perceiver.masks if hasattr(model.perceiver, "masks") else None,
-        'shared_layer_info': shared_layer_info,
-        'optimizer_state_dict': optimizer.state_dict(),
-        'epoch': epoch_idx
-    }
+    if dataset == 'text':
+        checkpoint = {
+            'model_state_dict': model.state_dict(),
+            'dataset_history': model.perceiver.datasets,
+            'dataset2num_classes': model.perceiver.dataset2num_classes,
+            'masks': model.perceiver.masks if hasattr(model.perceiver, "masks") else None,
+            'shared_layer_info': shared_layer_info,
+            'optimizer_state_dict': optimizer.state_dict(),
+            'epoch': epoch_idx
+        }
+    
+    else:
+        checkpoint = {
+            'model_state_dict': model.state_dict(),
+            'dataset_history': model.datasets,
+            'dataset2num_classes': model.dataset2num_classes,
+            'masks': model.masks if hasattr(model, "masks") else None,
+            'shared_layer_info': shared_layer_info,
+            'optimizer_state_dict': optimizer.state_dict(),
+            'epoch': epoch_idx
+        }
+
 
     torch.save(checkpoint, filepath)
     print(f"Checkpoint saved at {filepath}")
