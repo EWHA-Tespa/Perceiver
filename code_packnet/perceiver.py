@@ -195,6 +195,9 @@ class Perceiver(nn.Module):
             for _ in range(num_blocks)
         ])
 
+        # Feature Extractor를 self.shared로 설정
+        self.shared = nn.ModuleList([self.input_projection] + list(self.blocks))
+
         self.output_layer = nn.Linear(latent_dim, num_classes)
 
     def forward(self, x):

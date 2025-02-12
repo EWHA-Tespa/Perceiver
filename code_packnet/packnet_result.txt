@@ -1,0 +1,532 @@
+Starting Cosine-based Knowledge Transfer...
+Successfully applied backbone weights for Image task.
+Task 0 | Backbone 9 | Epoch 1/20 | Loss: 31.6235 | Accuracy: 0.9568
+Task 0 | Backbone 9 | Epoch 2/20 | Loss: 22.8205 | Accuracy: 0.9686
+Task 0 | Backbone 9 | Epoch 3/20 | Loss: 19.3243 | Accuracy: 0.9751
+Task 0 | Backbone 9 | Epoch 4/20 | Loss: 16.8830 | Accuracy: 0.9808
+Task 0 | Backbone 9 | Epoch 5/20 | Loss: 16.1363 | Accuracy: 0.9835
+Task 0 | Backbone 9 | Epoch 6/20 | Loss: 14.7179 | Accuracy: 0.9854
+Task 0 | Backbone 9 | Epoch 7/20 | Loss: 13.8384 | Accuracy: 0.9873
+Task 0 | Backbone 9 | Epoch 8/20 | Loss: 13.1209 | Accuracy: 0.9880
+Task 0 | Backbone 9 | Epoch 9/20 | Loss: 12.6682 | Accuracy: 0.9880
+Task 0 | Backbone 9 | Epoch 10/20 | Loss: 13.0270 | Accuracy: 0.9892
+Task 0 | Backbone 9 | Epoch 11/20 | Loss: 11.5025 | Accuracy: 0.9897
+Task 0 | Backbone 9 | Epoch 12/20 | Loss: 10.9561 | Accuracy: 0.9906
+Task 0 | Backbone 9 | Epoch 13/20 | Loss: 10.6098 | Accuracy: 0.9909
+Task 0 | Backbone 9 | Epoch 14/20 | Loss: 10.3073 | Accuracy: 0.9911
+Task 0 | Backbone 9 | Epoch 15/20 | Loss: 9.8704 | Accuracy: 0.9913
+Task 0 | Backbone 9 | Epoch 16/20 | Loss: 9.4424 | Accuracy: 0.9923
+Task 0 | Backbone 9 | Epoch 17/20 | Loss: 9.0095 | Accuracy: 0.9928
+Task 0 | Backbone 9 | Epoch 18/20 | Loss: 8.7445 | Accuracy: 0.9931
+Task 0 | Backbone 9 | Epoch 19/20 | Loss: 8.5935 | Accuracy: 0.9931
+Task 0 | Backbone 9 | Epoch 20/20 | Loss: 8.4062 | Accuracy: 0.9935
+Successfully applied backbone weights for Image task.
+Task 1 | Backbone 10 | Epoch 1/20 | Loss: 37.8425 | Accuracy: 0.9422
+Task 1 | Backbone 10 | Epoch 2/20 | Loss: 29.2370 | Accuracy: 0.9572
+Task 1 | Backbone 10 | Epoch 3/20 | Loss: 25.0640 | Accuracy: 0.9675
+Task 1 | Backbone 10 | Epoch 4/20 | Loss: 23.4648 | Accuracy: 0.9720
+Task 1 | Backbone 10 | Epoch 5/20 | Loss: 23.4931 | Accuracy: 0.9698
+Task 1 | Backbone 10 | Epoch 6/20 | Loss: 20.8701 | Accuracy: 0.9755
+Task 1 | Backbone 10 | Epoch 7/20 | Loss: 19.3891 | Accuracy: 0.9779
+Task 1 | Backbone 10 | Epoch 8/20 | Loss: 18.1471 | Accuracy: 0.9801
+Task 1 | Backbone 10 | Epoch 9/20 | Loss: 17.1883 | Accuracy: 0.9817
+Task 1 | Backbone 10 | Epoch 10/20 | Loss: 16.7819 | Accuracy: 0.9839
+Task 1 | Backbone 10 | Epoch 11/20 | Loss: 17.6449 | Accuracy: 0.9800
+Task 1 | Backbone 10 | Epoch 12/20 | Loss: 16.3952 | Accuracy: 0.9812
+Task 1 | Backbone 10 | Epoch 13/20 | Loss: 14.7709 | Accuracy: 0.9853
+Task 1 | Backbone 10 | Epoch 14/20 | Loss: 13.5476 | Accuracy: 0.9872
+Task 1 | Backbone 10 | Epoch 15/20 | Loss: 12.8548 | Accuracy: 0.9879
+Task 1 | Backbone 10 | Epoch 16/20 | Loss: 12.5106 | Accuracy: 0.9886
+Task 1 | Backbone 10 | Epoch 17/20 | Loss: 12.1026 | Accuracy: 0.9890
+Task 1 | Backbone 10 | Epoch 18/20 | Loss: 11.6385 | Accuracy: 0.9893
+Task 1 | Backbone 10 | Epoch 19/20 | Loss: 11.1325 | Accuracy: 0.9898
+Task 1 | Backbone 10 | Epoch 20/20 | Loss: 10.6778 | Accuracy: 0.9907
+Successfully applied backbone weights for Image task.
+Task 2 | Backbone 8 | Epoch 1/20 | Loss: 31.1591 | Accuracy: 0.9563
+Task 2 | Backbone 8 | Epoch 2/20 | Loss: 23.8350 | Accuracy: 0.9673
+Task 2 | Backbone 8 | Epoch 3/20 | Loss: 20.8586 | Accuracy: 0.9739
+Task 2 | Backbone 8 | Epoch 4/20 | Loss: 18.8386 | Accuracy: 0.9767
+Task 2 | Backbone 8 | Epoch 5/20 | Loss: 17.2408 | Accuracy: 0.9794
+Task 2 | Backbone 8 | Epoch 6/20 | Loss: 16.4354 | Accuracy: 0.9803
+Task 2 | Backbone 8 | Epoch 7/20 | Loss: 15.5772 | Accuracy: 0.9827
+Task 2 | Backbone 8 | Epoch 8/20 | Loss: 14.5010 | Accuracy: 0.9834
+Task 2 | Backbone 8 | Epoch 9/20 | Loss: 13.8717 | Accuracy: 0.9846
+Task 2 | Backbone 8 | Epoch 10/20 | Loss: 13.3078 | Accuracy: 0.9867
+Task 2 | Backbone 8 | Epoch 11/20 | Loss: 12.7642 | Accuracy: 0.9874
+Task 2 | Backbone 8 | Epoch 12/20 | Loss: 12.2191 | Accuracy: 0.9879
+Task 2 | Backbone 8 | Epoch 13/20 | Loss: 11.6110 | Accuracy: 0.9884
+Task 2 | Backbone 8 | Epoch 14/20 | Loss: 11.3139 | Accuracy: 0.9895
+Task 2 | Backbone 8 | Epoch 15/20 | Loss: 10.9580 | Accuracy: 0.9895
+Task 2 | Backbone 8 | Epoch 16/20 | Loss: 10.5382 | Accuracy: 0.9907
+Task 2 | Backbone 8 | Epoch 17/20 | Loss: 10.1634 | Accuracy: 0.9908
+Task 2 | Backbone 8 | Epoch 18/20 | Loss: 9.8846 | Accuracy: 0.9908
+Task 2 | Backbone 8 | Epoch 19/20 | Loss: 9.5911 | Accuracy: 0.9915
+Task 2 | Backbone 8 | Epoch 20/20 | Loss: 9.2541 | Accuracy: 0.9917
+Successfully applied backbone weights for Image task.
+Task 3 | Backbone 10 | Epoch 1/20 | Loss: 29.1920 | Accuracy: 0.9640
+Task 3 | Backbone 10 | Epoch 2/20 | Loss: 19.7178 | Accuracy: 0.9761
+Task 3 | Backbone 10 | Epoch 3/20 | Loss: 16.0608 | Accuracy: 0.9812
+Task 3 | Backbone 10 | Epoch 4/20 | Loss: 13.5502 | Accuracy: 0.9855
+Task 3 | Backbone 10 | Epoch 5/20 | Loss: 12.2455 | Accuracy: 0.9885
+Task 3 | Backbone 10 | Epoch 6/20 | Loss: 11.0974 | Accuracy: 0.9899
+Task 3 | Backbone 10 | Epoch 7/20 | Loss: 10.3590 | Accuracy: 0.9909
+Task 3 | Backbone 10 | Epoch 8/20 | Loss: 9.9649 | Accuracy: 0.9913
+Task 3 | Backbone 10 | Epoch 9/20 | Loss: 9.6329 | Accuracy: 0.9916
+Task 3 | Backbone 10 | Epoch 10/20 | Loss: 9.5053 | Accuracy: 0.9916
+Task 3 | Backbone 10 | Epoch 11/20 | Loss: 9.0656 | Accuracy: 0.9918
+Task 3 | Backbone 10 | Epoch 12/20 | Loss: 8.7585 | Accuracy: 0.9927
+Task 3 | Backbone 10 | Epoch 13/20 | Loss: 8.4135 | Accuracy: 0.9927
+Task 3 | Backbone 10 | Epoch 14/20 | Loss: 8.2234 | Accuracy: 0.9930
+Task 3 | Backbone 10 | Epoch 15/20 | Loss: 8.1569 | Accuracy: 0.9932
+Task 3 | Backbone 10 | Epoch 16/20 | Loss: 7.9791 | Accuracy: 0.9934
+Task 3 | Backbone 10 | Epoch 17/20 | Loss: 7.8061 | Accuracy: 0.9936
+Task 3 | Backbone 10 | Epoch 18/20 | Loss: 7.6283 | Accuracy: 0.9937
+Task 3 | Backbone 10 | Epoch 19/20 | Loss: 7.4922 | Accuracy: 0.9937
+Task 3 | Backbone 10 | Epoch 20/20 | Loss: 7.6605 | Accuracy: 0.9939
+Successfully applied backbone weights for Image task.
+Task 4 | Backbone 10 | Epoch 1/20 | Loss: 31.7468 | Accuracy: 0.9570
+Task 4 | Backbone 10 | Epoch 2/20 | Loss: 23.2418 | Accuracy: 0.9689
+Task 4 | Backbone 10 | Epoch 3/20 | Loss: 20.2075 | Accuracy: 0.9734
+Task 4 | Backbone 10 | Epoch 4/20 | Loss: 18.0376 | Accuracy: 0.9780
+Task 4 | Backbone 10 | Epoch 5/20 | Loss: 16.6083 | Accuracy: 0.9794
+Task 4 | Backbone 10 | Epoch 6/20 | Loss: 15.0738 | Accuracy: 0.9820
+Task 4 | Backbone 10 | Epoch 7/20 | Loss: 14.2400 | Accuracy: 0.9844
+Task 4 | Backbone 10 | Epoch 8/20 | Loss: 13.3113 | Accuracy: 0.9857
+Task 4 | Backbone 10 | Epoch 9/20 | Loss: 12.2399 | Accuracy: 0.9867
+Task 4 | Backbone 10 | Epoch 10/20 | Loss: 11.4776 | Accuracy: 0.9874
+Task 4 | Backbone 10 | Epoch 11/20 | Loss: 10.6151 | Accuracy: 0.9895
+Task 4 | Backbone 10 | Epoch 12/20 | Loss: 9.9442 | Accuracy: 0.9904
+Task 4 | Backbone 10 | Epoch 13/20 | Loss: 9.5212 | Accuracy: 0.9914
+Task 4 | Backbone 10 | Epoch 14/20 | Loss: 9.2546 | Accuracy: 0.9909
+Task 4 | Backbone 10 | Epoch 15/20 | Loss: 8.8166 | Accuracy: 0.9914
+Task 4 | Backbone 10 | Epoch 16/20 | Loss: 8.1702 | Accuracy: 0.9927
+Task 4 | Backbone 10 | Epoch 17/20 | Loss: 7.9683 | Accuracy: 0.9930
+Task 4 | Backbone 10 | Epoch 18/20 | Loss: 7.6704 | Accuracy: 0.9934
+Task 4 | Backbone 10 | Epoch 19/20 | Loss: 7.5387 | Accuracy: 0.9934
+Task 4 | Backbone 10 | Epoch 20/20 | Loss: 7.4475 | Accuracy: 0.9937
+Successfully applied backbone weights for Text task.
+Task 5 | Backbone 4 | Epoch 1/20 | Loss: 216.8609 | Accuracy: 0.4953
+Task 5 | Backbone 4 | Epoch 2/20 | Loss: 154.8616 | Accuracy: 0.6018
+Task 5 | Backbone 4 | Epoch 3/20 | Loss: 146.0706 | Accuracy: 0.6335
+Task 5 | Backbone 4 | Epoch 4/20 | Loss: 135.8335 | Accuracy: 0.6684
+Task 5 | Backbone 4 | Epoch 5/20 | Loss: 127.7634 | Accuracy: 0.6967
+Task 5 | Backbone 4 | Epoch 6/20 | Loss: 120.8314 | Accuracy: 0.7175
+Task 5 | Backbone 4 | Epoch 7/20 | Loss: 113.3980 | Accuracy: 0.7358
+Task 5 | Backbone 4 | Epoch 8/20 | Loss: 107.6810 | Accuracy: 0.7513
+Task 5 | Backbone 4 | Epoch 9/20 | Loss: 102.7264 | Accuracy: 0.7638
+Task 5 | Backbone 4 | Epoch 10/20 | Loss: 98.9847 | Accuracy: 0.7767
+Task 5 | Backbone 4 | Epoch 11/20 | Loss: 95.1786 | Accuracy: 0.7811
+Task 5 | Backbone 4 | Epoch 12/20 | Loss: 92.0611 | Accuracy: 0.7887
+Task 5 | Backbone 4 | Epoch 13/20 | Loss: 89.1625 | Accuracy: 0.7996
+Task 5 | Backbone 4 | Epoch 14/20 | Loss: 86.2819 | Accuracy: 0.8120
+Task 5 | Backbone 4 | Epoch 15/20 | Loss: 83.4689 | Accuracy: 0.8209
+Task 5 | Backbone 4 | Epoch 16/20 | Loss: 81.1726 | Accuracy: 0.8225
+Task 5 | Backbone 4 | Epoch 17/20 | Loss: 78.3302 | Accuracy: 0.8355
+Task 5 | Backbone 4 | Epoch 18/20 | Loss: 75.8795 | Accuracy: 0.8385
+Task 5 | Backbone 4 | Epoch 19/20 | Loss: 73.7971 | Accuracy: 0.8447
+Task 5 | Backbone 4 | Epoch 20/20 | Loss: 71.9699 | Accuracy: 0.8527
+Successfully applied backbone weights for Image task.
+Task 6 | Backbone 10 | Epoch 1/20 | Loss: 203.6003 | Accuracy: 0.3263
+Task 6 | Backbone 10 | Epoch 2/20 | Loss: 201.8037 | Accuracy: 0.3375
+Task 6 | Backbone 10 | Epoch 3/20 | Loss: 195.8874 | Accuracy: 0.4081
+Task 6 | Backbone 10 | Epoch 4/20 | Loss: 193.2735 | Accuracy: 0.4273
+Task 6 | Backbone 10 | Epoch 5/20 | Loss: 192.6307 | Accuracy: 0.4315
+Task 6 | Backbone 10 | Epoch 6/20 | Loss: 192.8299 | Accuracy: 0.4292
+Task 6 | Backbone 10 | Epoch 7/20 | Loss: 192.1389 | Accuracy: 0.4308
+Task 6 | Backbone 10 | Epoch 8/20 | Loss: 192.3914 | Accuracy: 0.4349
+Task 6 | Backbone 10 | Epoch 9/20 | Loss: 192.8368 | Accuracy: 0.4301
+Task 6 | Backbone 10 | Epoch 10/20 | Loss: 192.6487 | Accuracy: 0.4407
+Task 6 | Backbone 10 | Epoch 11/20 | Loss: 191.9370 | Accuracy: 0.4418
+Task 6 | Backbone 10 | Epoch 12/20 | Loss: 191.9172 | Accuracy: 0.4349
+Task 6 | Backbone 10 | Epoch 13/20 | Loss: 192.1322 | Accuracy: 0.4358
+Task 6 | Backbone 10 | Epoch 14/20 | Loss: 192.0387 | Accuracy: 0.4294
+Task 6 | Backbone 10 | Epoch 15/20 | Loss: 191.9185 | Accuracy: 0.4294
+Task 6 | Backbone 10 | Epoch 16/20 | Loss: 192.3068 | Accuracy: 0.4378
+Task 6 | Backbone 10 | Epoch 17/20 | Loss: 191.9551 | Accuracy: 0.4394
+Task 6 | Backbone 10 | Epoch 18/20 | Loss: 191.6038 | Accuracy: 0.4414
+Task 6 | Backbone 10 | Epoch 19/20 | Loss: 192.2015 | Accuracy: 0.4323
+Task 6 | Backbone 10 | Epoch 20/20 | Loss: 191.8853 | Accuracy: 0.4342
+Successfully applied backbone weights for Text task.
+Task 7 | Backbone 0 | Epoch 1/20 | Loss: 196.7160 | Accuracy: 0.3988
+Task 7 | Backbone 0 | Epoch 2/20 | Loss: 180.4106 | Accuracy: 0.4706
+Task 7 | Backbone 0 | Epoch 3/20 | Loss: 179.0150 | Accuracy: 0.4735
+Task 7 | Backbone 0 | Epoch 4/20 | Loss: 178.1415 | Accuracy: 0.4764
+Task 7 | Backbone 0 | Epoch 5/20 | Loss: 178.1249 | Accuracy: 0.4840
+Task 7 | Backbone 0 | Epoch 6/20 | Loss: 177.7376 | Accuracy: 0.4747
+Task 7 | Backbone 0 | Epoch 7/20 | Loss: 179.2909 | Accuracy: 0.4770
+Task 7 | Backbone 0 | Epoch 8/20 | Loss: 178.0229 | Accuracy: 0.4866
+Task 7 | Backbone 0 | Epoch 9/20 | Loss: 177.3896 | Accuracy: 0.4706
+Task 7 | Backbone 0 | Epoch 10/20 | Loss: 177.3182 | Accuracy: 0.4764
+Task 7 | Backbone 0 | Epoch 11/20 | Loss: 178.1460 | Accuracy: 0.4754
+Task 7 | Backbone 0 | Epoch 12/20 | Loss: 176.2762 | Accuracy: 0.4808
+Task 7 | Backbone 0 | Epoch 13/20 | Loss: 176.3067 | Accuracy: 0.4837
+Task 7 | Backbone 0 | Epoch 14/20 | Loss: 176.5376 | Accuracy: 0.4794
+Task 7 | Backbone 0 | Epoch 15/20 | Loss: 176.8667 | Accuracy: 0.4813
+Task 7 | Backbone 0 | Epoch 16/20 | Loss: 177.0212 | Accuracy: 0.4864
+Task 7 | Backbone 0 | Epoch 17/20 | Loss: 176.8253 | Accuracy: 0.4849
+Task 7 | Backbone 0 | Epoch 18/20 | Loss: 177.2191 | Accuracy: 0.4842
+Task 7 | Backbone 0 | Epoch 19/20 | Loss: 176.6530 | Accuracy: 0.4785
+Task 7 | Backbone 0 | Epoch 20/20 | Loss: 177.8754 | Accuracy: 0.4825
+Successfully applied backbone weights for Image task.
+Task 8 | Backbone 6 | Epoch 1/20 | Loss: 202.3642 | Accuracy: 0.3383
+Task 8 | Backbone 6 | Epoch 2/20 | Loss: 199.4937 | Accuracy: 0.3413
+Task 8 | Backbone 6 | Epoch 3/20 | Loss: 194.7451 | Accuracy: 0.3992
+Task 8 | Backbone 6 | Epoch 4/20 | Loss: 186.2123 | Accuracy: 0.4608
+Task 8 | Backbone 6 | Epoch 5/20 | Loss: 186.3200 | Accuracy: 0.4582
+Task 8 | Backbone 6 | Epoch 6/20 | Loss: 185.9812 | Accuracy: 0.4627
+Task 8 | Backbone 6 | Epoch 7/20 | Loss: 185.2765 | Accuracy: 0.4659
+Task 8 | Backbone 6 | Epoch 8/20 | Loss: 185.3357 | Accuracy: 0.4566
+Task 8 | Backbone 6 | Epoch 9/20 | Loss: 185.6403 | Accuracy: 0.4632
+Task 8 | Backbone 6 | Epoch 10/20 | Loss: 185.4782 | Accuracy: 0.4623
+Task 8 | Backbone 6 | Epoch 11/20 | Loss: 184.9944 | Accuracy: 0.4614
+Task 8 | Backbone 6 | Epoch 12/20 | Loss: 184.7260 | Accuracy: 0.4635
+Task 8 | Backbone 6 | Epoch 13/20 | Loss: 184.2773 | Accuracy: 0.4670
+Task 8 | Backbone 6 | Epoch 14/20 | Loss: 184.0054 | Accuracy: 0.4691
+Task 8 | Backbone 6 | Epoch 15/20 | Loss: 184.4801 | Accuracy: 0.4611
+Task 8 | Backbone 6 | Epoch 16/20 | Loss: 184.2726 | Accuracy: 0.4666
+Task 8 | Backbone 6 | Epoch 17/20 | Loss: 184.3320 | Accuracy: 0.4656
+Task 8 | Backbone 6 | Epoch 18/20 | Loss: 184.0144 | Accuracy: 0.4779
+Task 8 | Backbone 6 | Epoch 19/20 | Loss: 183.5459 | Accuracy: 0.4718
+Task 8 | Backbone 6 | Epoch 20/20 | Loss: 184.3227 | Accuracy: 0.4647
+Successfully applied backbone weights for Text task.
+Task 9 | Backbone 0 | Epoch 1/20 | Loss: 198.4423 | Accuracy: 0.3625
+Task 9 | Backbone 0 | Epoch 2/20 | Loss: 195.0821 | Accuracy: 0.3949
+Task 9 | Backbone 0 | Epoch 3/20 | Loss: 192.0509 | Accuracy: 0.4191
+Task 9 | Backbone 0 | Epoch 4/20 | Loss: 188.9710 | Accuracy: 0.4297
+Task 9 | Backbone 0 | Epoch 5/20 | Loss: 186.9462 | Accuracy: 0.4390
+Task 9 | Backbone 0 | Epoch 6/20 | Loss: 184.2816 | Accuracy: 0.4590
+Task 9 | Backbone 0 | Epoch 7/20 | Loss: 182.6723 | Accuracy: 0.4621
+Task 9 | Backbone 0 | Epoch 8/20 | Loss: 182.0622 | Accuracy: 0.4698
+Task 9 | Backbone 0 | Epoch 9/20 | Loss: 179.2518 | Accuracy: 0.4844
+Task 9 | Backbone 0 | Epoch 10/20 | Loss: 178.9926 | Accuracy: 0.4895
+Task 9 | Backbone 0 | Epoch 11/20 | Loss: 178.0407 | Accuracy: 0.4959
+Task 9 | Backbone 0 | Epoch 12/20 | Loss: 175.6043 | Accuracy: 0.5091
+Task 9 | Backbone 0 | Epoch 13/20 | Loss: 174.6791 | Accuracy: 0.5138
+Task 9 | Backbone 0 | Epoch 14/20 | Loss: 175.0674 | Accuracy: 0.5024
+Task 9 | Backbone 0 | Epoch 15/20 | Loss: 173.7223 | Accuracy: 0.5215
+Task 9 | Backbone 0 | Epoch 16/20 | Loss: 173.5893 | Accuracy: 0.5222
+Task 9 | Backbone 0 | Epoch 17/20 | Loss: 171.5716 | Accuracy: 0.5323
+Task 9 | Backbone 0 | Epoch 18/20 | Loss: 170.8395 | Accuracy: 0.5372
+Task 9 | Backbone 0 | Epoch 19/20 | Loss: 170.2084 | Accuracy: 0.5419
+Task 9 | Backbone 0 | Epoch 20/20 | Loss: 169.9057 | Accuracy: 0.5424
+Successfully applied backbone weights for Image task.
+Task 10 | Backbone 6 | Epoch 1/20 | Loss: 199.7356 | Accuracy: 0.3422
+Task 10 | Backbone 6 | Epoch 2/20 | Loss: 197.3771 | Accuracy: 0.3364
+Task 10 | Backbone 6 | Epoch 3/20 | Loss: 197.3716 | Accuracy: 0.3336
+Task 10 | Backbone 6 | Epoch 4/20 | Loss: 197.1748 | Accuracy: 0.3354
+Task 10 | Backbone 6 | Epoch 5/20 | Loss: 197.0055 | Accuracy: 0.3380
+Task 10 | Backbone 6 | Epoch 6/20 | Loss: 196.4718 | Accuracy: 0.3511
+Task 10 | Backbone 6 | Epoch 7/20 | Loss: 195.4235 | Accuracy: 0.3614
+Task 10 | Backbone 6 | Epoch 8/20 | Loss: 193.9713 | Accuracy: 0.3830
+Task 10 | Backbone 6 | Epoch 9/20 | Loss: 192.8942 | Accuracy: 0.3935
+Task 10 | Backbone 6 | Epoch 10/20 | Loss: 193.1449 | Accuracy: 0.3992
+Task 10 | Backbone 6 | Epoch 11/20 | Loss: 192.2655 | Accuracy: 0.4041
+Task 10 | Backbone 6 | Epoch 12/20 | Loss: 192.0900 | Accuracy: 0.4097
+Task 10 | Backbone 6 | Epoch 13/20 | Loss: 191.9164 | Accuracy: 0.4050
+Task 10 | Backbone 6 | Epoch 14/20 | Loss: 192.2675 | Accuracy: 0.3984
+Task 10 | Backbone 6 | Epoch 15/20 | Loss: 191.9338 | Accuracy: 0.4010
+Task 10 | Backbone 6 | Epoch 16/20 | Loss: 191.2566 | Accuracy: 0.4096
+Task 10 | Backbone 6 | Epoch 17/20 | Loss: 191.1680 | Accuracy: 0.4150
+Task 10 | Backbone 6 | Epoch 18/20 | Loss: 191.1725 | Accuracy: 0.4125
+Task 10 | Backbone 6 | Epoch 19/20 | Loss: 190.9039 | Accuracy: 0.4117
+Task 10 | Backbone 6 | Epoch 20/20 | Loss: 191.3314 | Accuracy: 0.4078
+Successfully applied backbone weights for Image task.
+Task 11 | Backbone 10 | Epoch 1/20 | Loss: 189.8364 | Accuracy: 0.3504
+Task 11 | Backbone 10 | Epoch 2/20 | Loss: 182.2994 | Accuracy: 0.4151
+Task 11 | Backbone 10 | Epoch 3/20 | Loss: 178.6794 | Accuracy: 0.4385
+Task 11 | Backbone 10 | Epoch 4/20 | Loss: 178.5806 | Accuracy: 0.4444
+Task 11 | Backbone 10 | Epoch 5/20 | Loss: 178.5387 | Accuracy: 0.4471
+Task 11 | Backbone 10 | Epoch 6/20 | Loss: 177.9026 | Accuracy: 0.4416
+Task 11 | Backbone 10 | Epoch 7/20 | Loss: 177.3368 | Accuracy: 0.4542
+Task 11 | Backbone 10 | Epoch 8/20 | Loss: 177.2805 | Accuracy: 0.4518
+Task 11 | Backbone 10 | Epoch 9/20 | Loss: 176.8585 | Accuracy: 0.4605
+Task 11 | Backbone 10 | Epoch 10/20 | Loss: 176.8945 | Accuracy: 0.4545
+Task 11 | Backbone 10 | Epoch 11/20 | Loss: 176.8252 | Accuracy: 0.4549
+Task 11 | Backbone 10 | Epoch 12/20 | Loss: 176.5541 | Accuracy: 0.4547
+Task 11 | Backbone 10 | Epoch 13/20 | Loss: 176.3498 | Accuracy: 0.4627
+Task 11 | Backbone 10 | Epoch 14/20 | Loss: 176.5658 | Accuracy: 0.4604
+Task 11 | Backbone 10 | Epoch 15/20 | Loss: 176.8273 | Accuracy: 0.4545
+Task 11 | Backbone 10 | Epoch 16/20 | Loss: 176.3526 | Accuracy: 0.4587
+Task 11 | Backbone 10 | Epoch 17/20 | Loss: 176.4393 | Accuracy: 0.4615
+Task 11 | Backbone 10 | Epoch 18/20 | Loss: 176.2296 | Accuracy: 0.4584
+Task 11 | Backbone 10 | Epoch 19/20 | Loss: 176.0505 | Accuracy: 0.4687
+Task 11 | Backbone 10 | Epoch 20/20 | Loss: 176.3952 | Accuracy: 0.4665
+Starting Euclidean-based Knowledge Transfer...
+Successfully applied backbone weights for Image task.
+Task 0 | Backbone 7 | Epoch 1/20 | Loss: 31.3329 | Accuracy: 0.9547
+Task 0 | Backbone 7 | Epoch 2/20 | Loss: 22.3979 | Accuracy: 0.9693
+Task 0 | Backbone 7 | Epoch 3/20 | Loss: 19.2693 | Accuracy: 0.9758
+Task 0 | Backbone 7 | Epoch 4/20 | Loss: 17.3056 | Accuracy: 0.9789
+Task 0 | Backbone 7 | Epoch 5/20 | Loss: 15.9235 | Accuracy: 0.9828
+Task 0 | Backbone 7 | Epoch 6/20 | Loss: 14.8797 | Accuracy: 0.9846
+Task 0 | Backbone 7 | Epoch 7/20 | Loss: 14.8129 | Accuracy: 0.9844
+Task 0 | Backbone 7 | Epoch 8/20 | Loss: 14.1619 | Accuracy: 0.9876
+Task 0 | Backbone 7 | Epoch 9/20 | Loss: 12.5155 | Accuracy: 0.9882
+Task 0 | Backbone 7 | Epoch 10/20 | Loss: 11.7947 | Accuracy: 0.9897
+Task 0 | Backbone 7 | Epoch 11/20 | Loss: 11.4367 | Accuracy: 0.9897
+Task 0 | Backbone 7 | Epoch 12/20 | Loss: 11.7897 | Accuracy: 0.9902
+Task 0 | Backbone 7 | Epoch 13/20 | Loss: 10.2170 | Accuracy: 0.9911
+Task 0 | Backbone 7 | Epoch 14/20 | Loss: 9.6171 | Accuracy: 0.9921
+Task 0 | Backbone 7 | Epoch 15/20 | Loss: 9.2446 | Accuracy: 0.9923
+Task 0 | Backbone 7 | Epoch 16/20 | Loss: 8.8956 | Accuracy: 0.9926
+Task 0 | Backbone 7 | Epoch 17/20 | Loss: 8.6802 | Accuracy: 0.9931
+Task 0 | Backbone 7 | Epoch 18/20 | Loss: 8.3924 | Accuracy: 0.9935
+Task 0 | Backbone 7 | Epoch 19/20 | Loss: 9.1890 | Accuracy: 0.9935
+Task 0 | Backbone 7 | Epoch 20/20 | Loss: 8.0564 | Accuracy: 0.9937
+Successfully applied backbone weights for Image task.
+Task 1 | Backbone 10 | Epoch 1/20 | Loss: 37.8565 | Accuracy: 0.9408
+Task 1 | Backbone 10 | Epoch 2/20 | Loss: 28.9355 | Accuracy: 0.9589
+Task 1 | Backbone 10 | Epoch 3/20 | Loss: 25.5554 | Accuracy: 0.9677
+Task 1 | Backbone 10 | Epoch 4/20 | Loss: 23.1715 | Accuracy: 0.9719
+Task 1 | Backbone 10 | Epoch 5/20 | Loss: 21.5164 | Accuracy: 0.9762
+Task 1 | Backbone 10 | Epoch 6/20 | Loss: 20.1021 | Accuracy: 0.9779
+Task 1 | Backbone 10 | Epoch 7/20 | Loss: 19.0118 | Accuracy: 0.9791
+Task 1 | Backbone 10 | Epoch 8/20 | Loss: 17.9204 | Accuracy: 0.9812
+Task 1 | Backbone 10 | Epoch 9/20 | Loss: 17.1514 | Accuracy: 0.9817
+Task 1 | Backbone 10 | Epoch 10/20 | Loss: 16.1466 | Accuracy: 0.9838
+Task 1 | Backbone 10 | Epoch 11/20 | Loss: 15.3381 | Accuracy: 0.9846
+Task 1 | Backbone 10 | Epoch 12/20 | Loss: 14.8953 | Accuracy: 0.9845
+Task 1 | Backbone 10 | Epoch 13/20 | Loss: 14.1744 | Accuracy: 0.9862
+Task 1 | Backbone 10 | Epoch 14/20 | Loss: 13.6133 | Accuracy: 0.9872
+Task 1 | Backbone 10 | Epoch 15/20 | Loss: 13.0326 | Accuracy: 0.9881
+Task 1 | Backbone 10 | Epoch 16/20 | Loss: 12.7559 | Accuracy: 0.9886
+Task 1 | Backbone 10 | Epoch 17/20 | Loss: 12.3297 | Accuracy: 0.9888
+Task 1 | Backbone 10 | Epoch 18/20 | Loss: 11.9421 | Accuracy: 0.9898
+Task 1 | Backbone 10 | Epoch 19/20 | Loss: 11.6032 | Accuracy: 0.9902
+Task 1 | Backbone 10 | Epoch 20/20 | Loss: 11.3115 | Accuracy: 0.9903
+Successfully applied backbone weights for Image task.
+Task 2 | Backbone 8 | Epoch 1/20 | Loss: 30.6047 | Accuracy: 0.9571
+Task 2 | Backbone 8 | Epoch 2/20 | Loss: 23.6087 | Accuracy: 0.9680
+Task 2 | Backbone 8 | Epoch 3/20 | Loss: 20.4859 | Accuracy: 0.9723
+Task 2 | Backbone 8 | Epoch 4/20 | Loss: 19.0962 | Accuracy: 0.9754
+Task 2 | Backbone 8 | Epoch 5/20 | Loss: 17.4121 | Accuracy: 0.9772
+Task 2 | Backbone 8 | Epoch 6/20 | Loss: 15.9817 | Accuracy: 0.9813
+Task 2 | Backbone 8 | Epoch 7/20 | Loss: 15.0490 | Accuracy: 0.9832
+Task 2 | Backbone 8 | Epoch 8/20 | Loss: 14.3228 | Accuracy: 0.9844
+Task 2 | Backbone 8 | Epoch 9/20 | Loss: 13.7237 | Accuracy: 0.9853
+Task 2 | Backbone 8 | Epoch 10/20 | Loss: 13.0615 | Accuracy: 0.9862
+Task 2 | Backbone 8 | Epoch 11/20 | Loss: 12.3858 | Accuracy: 0.9877
+Task 2 | Backbone 8 | Epoch 12/20 | Loss: 12.1428 | Accuracy: 0.9870
+Task 2 | Backbone 8 | Epoch 13/20 | Loss: 11.4467 | Accuracy: 0.9881
+Task 2 | Backbone 8 | Epoch 14/20 | Loss: 11.1253 | Accuracy: 0.9884
+Task 2 | Backbone 8 | Epoch 15/20 | Loss: 10.5505 | Accuracy: 0.9893
+Task 2 | Backbone 8 | Epoch 16/20 | Loss: 9.8569 | Accuracy: 0.9908
+Task 2 | Backbone 8 | Epoch 17/20 | Loss: 9.7360 | Accuracy: 0.9910
+Task 2 | Backbone 8 | Epoch 18/20 | Loss: 9.4461 | Accuracy: 0.9912
+Task 2 | Backbone 8 | Epoch 19/20 | Loss: 9.1698 | Accuracy: 0.9917
+Task 2 | Backbone 8 | Epoch 20/20 | Loss: 8.9860 | Accuracy: 0.9919
+Successfully applied backbone weights for Image task.
+Task 3 | Backbone 10 | Epoch 1/20 | Loss: 29.5245 | Accuracy: 0.9631
+Task 3 | Backbone 10 | Epoch 2/20 | Loss: 19.7729 | Accuracy: 0.9763
+Task 3 | Backbone 10 | Epoch 3/20 | Loss: 16.8896 | Accuracy: 0.9812
+Task 3 | Backbone 10 | Epoch 4/20 | Loss: 14.6810 | Accuracy: 0.9833
+Task 3 | Backbone 10 | Epoch 5/20 | Loss: 13.3593 | Accuracy: 0.9862
+Task 3 | Backbone 10 | Epoch 6/20 | Loss: 11.7762 | Accuracy: 0.9890
+Task 3 | Backbone 10 | Epoch 7/20 | Loss: 10.9919 | Accuracy: 0.9899
+Task 3 | Backbone 10 | Epoch 8/20 | Loss: 10.3124 | Accuracy: 0.9908
+Task 3 | Backbone 10 | Epoch 9/20 | Loss: 9.9491 | Accuracy: 0.9911
+Task 3 | Backbone 10 | Epoch 10/20 | Loss: 9.5031 | Accuracy: 0.9920
+Task 3 | Backbone 10 | Epoch 11/20 | Loss: 9.3355 | Accuracy: 0.9920
+Task 3 | Backbone 10 | Epoch 12/20 | Loss: 9.1722 | Accuracy: 0.9922
+Task 3 | Backbone 10 | Epoch 13/20 | Loss: 8.8623 | Accuracy: 0.9922
+Task 3 | Backbone 10 | Epoch 14/20 | Loss: 8.6260 | Accuracy: 0.9927
+Task 3 | Backbone 10 | Epoch 15/20 | Loss: 8.3339 | Accuracy: 0.9929
+Task 3 | Backbone 10 | Epoch 16/20 | Loss: 8.1109 | Accuracy: 0.9932
+Task 3 | Backbone 10 | Epoch 17/20 | Loss: 7.9206 | Accuracy: 0.9936
+Task 3 | Backbone 10 | Epoch 18/20 | Loss: 8.0717 | Accuracy: 0.9934
+Task 3 | Backbone 10 | Epoch 19/20 | Loss: 7.7257 | Accuracy: 0.9936
+Task 3 | Backbone 10 | Epoch 20/20 | Loss: 7.5409 | Accuracy: 0.9936
+Successfully applied backbone weights for Image task.
+Task 4 | Backbone 10 | Epoch 1/20 | Loss: 31.4875 | Accuracy: 0.9556
+Task 4 | Backbone 10 | Epoch 2/20 | Loss: 23.6976 | Accuracy: 0.9673
+Task 4 | Backbone 10 | Epoch 3/20 | Loss: 20.4066 | Accuracy: 0.9734
+Task 4 | Backbone 10 | Epoch 4/20 | Loss: 17.8194 | Accuracy: 0.9776
+Task 4 | Backbone 10 | Epoch 5/20 | Loss: 16.2181 | Accuracy: 0.9816
+Task 4 | Backbone 10 | Epoch 6/20 | Loss: 15.0062 | Accuracy: 0.9823
+Task 4 | Backbone 10 | Epoch 7/20 | Loss: 14.0159 | Accuracy: 0.9850
+Task 4 | Backbone 10 | Epoch 8/20 | Loss: 13.0479 | Accuracy: 0.9860
+Task 4 | Backbone 10 | Epoch 9/20 | Loss: 12.0857 | Accuracy: 0.9869
+Task 4 | Backbone 10 | Epoch 10/20 | Loss: 11.8635 | Accuracy: 0.9869
+Task 4 | Backbone 10 | Epoch 11/20 | Loss: 11.1327 | Accuracy: 0.9885
+Task 4 | Backbone 10 | Epoch 12/20 | Loss: 10.3450 | Accuracy: 0.9902
+Task 4 | Backbone 10 | Epoch 13/20 | Loss: 9.8592 | Accuracy: 0.9906
+Task 4 | Backbone 10 | Epoch 14/20 | Loss: 9.5141 | Accuracy: 0.9914
+Task 4 | Backbone 10 | Epoch 15/20 | Loss: 9.3310 | Accuracy: 0.9920
+Task 4 | Backbone 10 | Epoch 16/20 | Loss: 9.0861 | Accuracy: 0.9920
+Task 4 | Backbone 10 | Epoch 17/20 | Loss: 8.7434 | Accuracy: 0.9927
+Task 4 | Backbone 10 | Epoch 18/20 | Loss: 8.5770 | Accuracy: 0.9925
+Task 4 | Backbone 10 | Epoch 19/20 | Loss: 8.3423 | Accuracy: 0.9927
+Task 4 | Backbone 10 | Epoch 20/20 | Loss: 8.0421 | Accuracy: 0.9932
+Successfully applied backbone weights for Text task.
+Task 5 | Backbone 4 | Epoch 1/20 | Loss: 223.3319 | Accuracy: 0.4538
+Task 5 | Backbone 4 | Epoch 2/20 | Loss: 160.0046 | Accuracy: 0.5769
+Task 5 | Backbone 4 | Epoch 3/20 | Loss: 147.8849 | Accuracy: 0.6267
+Task 5 | Backbone 4 | Epoch 4/20 | Loss: 139.0255 | Accuracy: 0.6558
+Task 5 | Backbone 4 | Epoch 5/20 | Loss: 129.8529 | Accuracy: 0.6840
+Task 5 | Backbone 4 | Epoch 6/20 | Loss: 123.3364 | Accuracy: 0.7104
+Task 5 | Backbone 4 | Epoch 7/20 | Loss: 117.3490 | Accuracy: 0.7245
+Task 5 | Backbone 4 | Epoch 8/20 | Loss: 110.6888 | Accuracy: 0.7405
+Task 5 | Backbone 4 | Epoch 9/20 | Loss: 105.2716 | Accuracy: 0.7527
+Task 5 | Backbone 4 | Epoch 10/20 | Loss: 101.1121 | Accuracy: 0.7636
+Task 5 | Backbone 4 | Epoch 11/20 | Loss: 97.8770 | Accuracy: 0.7735
+Task 5 | Backbone 4 | Epoch 12/20 | Loss: 94.8895 | Accuracy: 0.7816
+Task 5 | Backbone 4 | Epoch 13/20 | Loss: 91.9958 | Accuracy: 0.7933
+Task 5 | Backbone 4 | Epoch 14/20 | Loss: 89.0042 | Accuracy: 0.8009
+Task 5 | Backbone 4 | Epoch 15/20 | Loss: 86.3949 | Accuracy: 0.8071
+Task 5 | Backbone 4 | Epoch 16/20 | Loss: 83.9298 | Accuracy: 0.8162
+Task 5 | Backbone 4 | Epoch 17/20 | Loss: 82.2175 | Accuracy: 0.8171
+Task 5 | Backbone 4 | Epoch 18/20 | Loss: 80.2578 | Accuracy: 0.8247
+Task 5 | Backbone 4 | Epoch 19/20 | Loss: 78.1297 | Accuracy: 0.8295
+Task 5 | Backbone 4 | Epoch 20/20 | Loss: 76.3883 | Accuracy: 0.8311
+Successfully applied backbone weights for Image task.
+Task 6 | Backbone 10 | Epoch 1/20 | Loss: 202.5224 | Accuracy: 0.3282
+Task 6 | Backbone 10 | Epoch 2/20 | Loss: 201.0582 | Accuracy: 0.3534
+Task 6 | Backbone 10 | Epoch 3/20 | Loss: 195.2609 | Accuracy: 0.4114
+Task 6 | Backbone 10 | Epoch 4/20 | Loss: 192.7554 | Accuracy: 0.4352
+Task 6 | Backbone 10 | Epoch 5/20 | Loss: 192.5998 | Accuracy: 0.4402
+Task 6 | Backbone 10 | Epoch 6/20 | Loss: 192.6967 | Accuracy: 0.4342
+Task 6 | Backbone 10 | Epoch 7/20 | Loss: 192.2630 | Accuracy: 0.4344
+Task 6 | Backbone 10 | Epoch 8/20 | Loss: 192.1393 | Accuracy: 0.4309
+Task 6 | Backbone 10 | Epoch 9/20 | Loss: 191.6597 | Accuracy: 0.4385
+Task 6 | Backbone 10 | Epoch 10/20 | Loss: 191.7360 | Accuracy: 0.4330
+Task 6 | Backbone 10 | Epoch 11/20 | Loss: 192.5733 | Accuracy: 0.4308
+Task 6 | Backbone 10 | Epoch 12/20 | Loss: 192.0113 | Accuracy: 0.4380
+Task 6 | Backbone 10 | Epoch 13/20 | Loss: 192.5963 | Accuracy: 0.4275
+Task 6 | Backbone 10 | Epoch 14/20 | Loss: 192.0283 | Accuracy: 0.4340
+Task 6 | Backbone 10 | Epoch 15/20 | Loss: 191.9954 | Accuracy: 0.4351
+Task 6 | Backbone 10 | Epoch 16/20 | Loss: 191.5711 | Accuracy: 0.4395
+Task 6 | Backbone 10 | Epoch 17/20 | Loss: 192.5493 | Accuracy: 0.4337
+Task 6 | Backbone 10 | Epoch 18/20 | Loss: 192.2219 | Accuracy: 0.4325
+Task 6 | Backbone 10 | Epoch 19/20 | Loss: 191.4437 | Accuracy: 0.4335
+Task 6 | Backbone 10 | Epoch 20/20 | Loss: 192.2117 | Accuracy: 0.4303
+Successfully applied backbone weights for Image task.
+Task 7 | Backbone 11 | Epoch 1/20 | Loss: 187.8068 | Accuracy: 0.4373
+Task 7 | Backbone 11 | Epoch 2/20 | Loss: 179.5576 | Accuracy: 0.4668
+Task 7 | Backbone 11 | Epoch 3/20 | Loss: 178.5707 | Accuracy: 0.4770
+Task 7 | Backbone 11 | Epoch 4/20 | Loss: 178.3079 | Accuracy: 0.4706
+Task 7 | Backbone 11 | Epoch 5/20 | Loss: 178.2362 | Accuracy: 0.4778
+Task 7 | Backbone 11 | Epoch 6/20 | Loss: 177.9121 | Accuracy: 0.4745
+Task 7 | Backbone 11 | Epoch 7/20 | Loss: 177.4853 | Accuracy: 0.4787
+Task 7 | Backbone 11 | Epoch 8/20 | Loss: 178.1370 | Accuracy: 0.4725
+Task 7 | Backbone 11 | Epoch 9/20 | Loss: 177.2561 | Accuracy: 0.4809
+Task 7 | Backbone 11 | Epoch 10/20 | Loss: 176.6604 | Accuracy: 0.4770
+Task 7 | Backbone 11 | Epoch 11/20 | Loss: 176.7155 | Accuracy: 0.4835
+Task 7 | Backbone 11 | Epoch 12/20 | Loss: 177.1188 | Accuracy: 0.4795
+Task 7 | Backbone 11 | Epoch 13/20 | Loss: 176.7352 | Accuracy: 0.4852
+Task 7 | Backbone 11 | Epoch 14/20 | Loss: 175.8807 | Accuracy: 0.4911
+Task 7 | Backbone 11 | Epoch 15/20 | Loss: 176.7300 | Accuracy: 0.4832
+Task 7 | Backbone 11 | Epoch 16/20 | Loss: 176.9827 | Accuracy: 0.4820
+Task 7 | Backbone 11 | Epoch 17/20 | Loss: 175.6742 | Accuracy: 0.4915
+Task 7 | Backbone 11 | Epoch 18/20 | Loss: 175.5851 | Accuracy: 0.4887
+Task 7 | Backbone 11 | Epoch 19/20 | Loss: 174.7894 | Accuracy: 0.4813
+Task 7 | Backbone 11 | Epoch 20/20 | Loss: 174.0406 | Accuracy: 0.4984
+Successfully applied backbone weights for Image task.
+Task 8 | Backbone 6 | Epoch 1/20 | Loss: 202.2369 | Accuracy: 0.3299
+Task 8 | Backbone 6 | Epoch 2/20 | Loss: 199.0215 | Accuracy: 0.3487
+Task 8 | Backbone 6 | Epoch 3/20 | Loss: 191.2488 | Accuracy: 0.4307
+Task 8 | Backbone 6 | Epoch 4/20 | Loss: 186.2318 | Accuracy: 0.4613
+Task 8 | Backbone 6 | Epoch 5/20 | Loss: 186.3269 | Accuracy: 0.4554
+Task 8 | Backbone 6 | Epoch 6/20 | Loss: 185.7743 | Accuracy: 0.4549
+Task 8 | Backbone 6 | Epoch 7/20 | Loss: 184.7766 | Accuracy: 0.4611
+Task 8 | Backbone 6 | Epoch 8/20 | Loss: 184.3090 | Accuracy: 0.4694
+Task 8 | Backbone 6 | Epoch 9/20 | Loss: 185.1687 | Accuracy: 0.4590
+Task 8 | Backbone 6 | Epoch 10/20 | Loss: 185.0272 | Accuracy: 0.4716
+Task 8 | Backbone 6 | Epoch 11/20 | Loss: 185.0337 | Accuracy: 0.4649
+Task 8 | Backbone 6 | Epoch 12/20 | Loss: 184.6923 | Accuracy: 0.4663
+Task 8 | Backbone 6 | Epoch 13/20 | Loss: 184.0717 | Accuracy: 0.4770
+Task 8 | Backbone 6 | Epoch 14/20 | Loss: 183.9545 | Accuracy: 0.4729
+Task 8 | Backbone 6 | Epoch 15/20 | Loss: 183.7539 | Accuracy: 0.4753
+Task 8 | Backbone 6 | Epoch 16/20 | Loss: 183.8617 | Accuracy: 0.4699
+Task 8 | Backbone 6 | Epoch 17/20 | Loss: 184.0799 | Accuracy: 0.4663
+Task 8 | Backbone 6 | Epoch 18/20 | Loss: 183.6012 | Accuracy: 0.4751
+Task 8 | Backbone 6 | Epoch 19/20 | Loss: 183.7925 | Accuracy: 0.4678
+Task 8 | Backbone 6 | Epoch 20/20 | Loss: 183.2525 | Accuracy: 0.4793
+Successfully applied backbone weights for Image task.
+Task 9 | Backbone 10 | Epoch 1/20 | Loss: 199.2463 | Accuracy: 0.3331
+Task 9 | Backbone 10 | Epoch 2/20 | Loss: 198.6579 | Accuracy: 0.3256
+Task 9 | Backbone 10 | Epoch 3/20 | Loss: 198.1688 | Accuracy: 0.3324
+Task 9 | Backbone 10 | Epoch 4/20 | Loss: 198.4303 | Accuracy: 0.3495
+Task 9 | Backbone 10 | Epoch 5/20 | Loss: 197.7848 | Accuracy: 0.3536
+Task 9 | Backbone 10 | Epoch 6/20 | Loss: 196.6877 | Accuracy: 0.3768
+Task 9 | Backbone 10 | Epoch 7/20 | Loss: 195.0869 | Accuracy: 0.3869
+Task 9 | Backbone 10 | Epoch 8/20 | Loss: 194.6805 | Accuracy: 0.3871
+Task 9 | Backbone 10 | Epoch 9/20 | Loss: 194.2295 | Accuracy: 0.3998
+Task 9 | Backbone 10 | Epoch 10/20 | Loss: 193.5115 | Accuracy: 0.4076
+Task 9 | Backbone 10 | Epoch 11/20 | Loss: 192.6200 | Accuracy: 0.4076
+Task 9 | Backbone 10 | Epoch 12/20 | Loss: 191.5297 | Accuracy: 0.4169
+Task 9 | Backbone 10 | Epoch 13/20 | Loss: 191.4978 | Accuracy: 0.4156
+Task 9 | Backbone 10 | Epoch 14/20 | Loss: 189.2093 | Accuracy: 0.4362
+Task 9 | Backbone 10 | Epoch 15/20 | Loss: 189.8572 | Accuracy: 0.4224
+Task 9 | Backbone 10 | Epoch 16/20 | Loss: 185.5914 | Accuracy: 0.4466
+Task 9 | Backbone 10 | Epoch 17/20 | Loss: 186.0725 | Accuracy: 0.4461
+Task 9 | Backbone 10 | Epoch 18/20 | Loss: 184.1653 | Accuracy: 0.4550
+Task 9 | Backbone 10 | Epoch 19/20 | Loss: 183.5462 | Accuracy: 0.4658
+Task 9 | Backbone 10 | Epoch 20/20 | Loss: 183.4603 | Accuracy: 0.4639
+Successfully applied backbone weights for Image task.
+Task 10 | Backbone 6 | Epoch 1/20 | Loss: 199.4853 | Accuracy: 0.3352
+Task 10 | Backbone 6 | Epoch 2/20 | Loss: 197.0762 | Accuracy: 0.3418
+Task 10 | Backbone 6 | Epoch 3/20 | Loss: 196.8412 | Accuracy: 0.3431
+Task 10 | Backbone 6 | Epoch 4/20 | Loss: 195.9609 | Accuracy: 0.3595
+Task 10 | Backbone 6 | Epoch 5/20 | Loss: 194.9973 | Accuracy: 0.3723
+Task 10 | Backbone 6 | Epoch 6/20 | Loss: 193.5084 | Accuracy: 0.3903
+Task 10 | Backbone 6 | Epoch 7/20 | Loss: 193.2728 | Accuracy: 0.3873
+Task 10 | Backbone 6 | Epoch 8/20 | Loss: 192.6685 | Accuracy: 0.3968
+Task 10 | Backbone 6 | Epoch 9/20 | Loss: 193.0623 | Accuracy: 0.3931
+Task 10 | Backbone 6 | Epoch 10/20 | Loss: 191.7600 | Accuracy: 0.4012
+Task 10 | Backbone 6 | Epoch 11/20 | Loss: 192.2399 | Accuracy: 0.3982
+Task 10 | Backbone 6 | Epoch 12/20 | Loss: 191.9379 | Accuracy: 0.4010
+Task 10 | Backbone 6 | Epoch 13/20 | Loss: 191.6343 | Accuracy: 0.4043
+Task 10 | Backbone 6 | Epoch 14/20 | Loss: 191.7234 | Accuracy: 0.4066
+Task 10 | Backbone 6 | Epoch 15/20 | Loss: 192.2465 | Accuracy: 0.4019
+Task 10 | Backbone 6 | Epoch 16/20 | Loss: 191.4397 | Accuracy: 0.4068
+Task 10 | Backbone 6 | Epoch 17/20 | Loss: 191.4583 | Accuracy: 0.4076
+Task 10 | Backbone 6 | Epoch 18/20 | Loss: 190.8437 | Accuracy: 0.4115
+Task 10 | Backbone 6 | Epoch 19/20 | Loss: 191.4137 | Accuracy: 0.4064
+Task 10 | Backbone 6 | Epoch 20/20 | Loss: 191.0266 | Accuracy: 0.4085
+Successfully applied backbone weights for Image task.
+Task 11 | Backbone 10 | Epoch 1/20 | Loss: 189.1378 | Accuracy: 0.3598
+Task 11 | Backbone 10 | Epoch 2/20 | Loss: 180.5801 | Accuracy: 0.4347
+Task 11 | Backbone 10 | Epoch 3/20 | Loss: 178.6543 | Accuracy: 0.4402
+Task 11 | Backbone 10 | Epoch 4/20 | Loss: 178.6521 | Accuracy: 0.4489
+Task 11 | Backbone 10 | Epoch 5/20 | Loss: 177.6727 | Accuracy: 0.4478
+Task 11 | Backbone 10 | Epoch 6/20 | Loss: 177.7009 | Accuracy: 0.4573
+Task 11 | Backbone 10 | Epoch 7/20 | Loss: 177.4473 | Accuracy: 0.4504
+Task 11 | Backbone 10 | Epoch 8/20 | Loss: 177.2048 | Accuracy: 0.4544
+Task 11 | Backbone 10 | Epoch 9/20 | Loss: 176.8927 | Accuracy: 0.4604
+Task 11 | Backbone 10 | Epoch 10/20 | Loss: 177.5122 | Accuracy: 0.4456
+Task 11 | Backbone 10 | Epoch 11/20 | Loss: 176.4208 | Accuracy: 0.4602
+Task 11 | Backbone 10 | Epoch 12/20 | Loss: 176.5726 | Accuracy: 0.4611
+Task 11 | Backbone 10 | Epoch 13/20 | Loss: 176.6423 | Accuracy: 0.4555
+Task 11 | Backbone 10 | Epoch 14/20 | Loss: 176.5064 | Accuracy: 0.4591
+Task 11 | Backbone 10 | Epoch 15/20 | Loss: 176.4078 | Accuracy: 0.4655
+Task 11 | Backbone 10 | Epoch 16/20 | Loss: 176.7232 | Accuracy: 0.4587
+Task 11 | Backbone 10 | Epoch 17/20 | Loss: 176.3791 | Accuracy: 0.4591
+Task 11 | Backbone 10 | Epoch 18/20 | Loss: 176.3027 | Accuracy: 0.4600
+Task 11 | Backbone 10 | Epoch 19/20 | Loss: 176.1688 | Accuracy: 0.4620
+Task 11 | Backbone 10 | Epoch 20/20 | Loss: 175.6487 | Accuracy: 0.4665
+Evaluating Cosine-based Transfer results...
+Task 0 (Text) | Test Loss: 0.2163, Test Accuracy: 0.9479
+Task 1 (Text) | Test Loss: 0.2321, Test Accuracy: 0.9455
+Task 2 (Text) | Test Loss: 0.2039, Test Accuracy: 0.9578
+Task 3 (Text) | Test Loss: 0.1833, Test Accuracy: 0.9631
+Task 4 (Text) | Test Loss: 0.2035, Test Accuracy: 0.9531
+Task 5 (Text) | Test Loss: 0.7737, Test Accuracy: 0.7331
+Task 6 (Image) | Test Loss: 1.0551, Test Accuracy: 0.4225
+Task 7 (Image) | Test Loss: 0.9617, Test Accuracy: 0.4872
+Task 8 (Image) | Test Loss: 0.9889, Test Accuracy: 0.5035
+Task 9 (Image) | Test Loss: 0.9857, Test Accuracy: 0.5132
+Task 10 (Image) | Test Loss: 1.0722, Test Accuracy: 0.3772
+Task 11 (Image) | Test Loss: 1.0173, Test Accuracy: 0.4698
+Evaluating Euclidean-based Transfer results...
+Task 0 (Text) | Test Loss: 0.2137, Test Accuracy: 0.9486
+Task 1 (Text) | Test Loss: 0.2483, Test Accuracy: 0.9441
+Task 2 (Text) | Test Loss: 0.2113, Test Accuracy: 0.9537
+Task 3 (Text) | Test Loss: 0.1821, Test Accuracy: 0.9589
+Task 4 (Text) | Test Loss: 0.1874, Test Accuracy: 0.9538
+Task 5 (Text) | Test Loss: 0.7735, Test Accuracy: 0.7273
+Task 6 (Image) | Test Loss: 1.0528, Test Accuracy: 0.4355
+Task 7 (Image) | Test Loss: 0.9460, Test Accuracy: 0.4997
+Task 8 (Image) | Test Loss: 0.9868, Test Accuracy: 0.5000
+Task 9 (Image) | Test Loss: 1.0164, Test Accuracy: 0.4380
+Task 10 (Image) | Test Loss: 1.0569, Test Accuracy: 0.4318
+Task 11 (Image) | Test Loss: 1.0119, Test Accuracy: 0.4865
